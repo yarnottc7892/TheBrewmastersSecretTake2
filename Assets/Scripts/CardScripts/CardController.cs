@@ -44,7 +44,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
     public void OnPointerDown(PointerEventData eventData) 
     {
-        Debug.Log("Clicked");
+        // Maybe do something, maybe do nothing
     }
 
     public void OnBeginDrag(PointerEventData eventData) 
