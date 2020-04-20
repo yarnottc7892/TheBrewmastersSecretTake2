@@ -7,6 +7,8 @@ public class PlayAreaController : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData) 
     {
-        eventData.pointerDrag.GetComponent<CardController>().data.Play();
+        CardController card = eventData.pointerDrag.GetComponent<CardController>();
+        card.data.Play();
+        StartCoroutine(card.discard());
     }
 }
