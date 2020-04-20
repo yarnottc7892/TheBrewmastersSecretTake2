@@ -21,6 +21,13 @@ public class PlayerMovement : MonoBehaviour
         float moveHori = Input.GetAxis("Horizontal");
         float moveVert = Input.GetAxis("Vertical");
 
-        rb.velocity = new Vector2(moveHori, moveVert) * speed;
+        if (!GameManager.textBoxOn)
+        {
+            rb.velocity = new Vector2(moveHori, moveVert) * speed;
+        }
+        else
+        {
+            rb.velocity = Vector2.zero;
+        }
     }
 }
