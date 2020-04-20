@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class IngredientManager : MonoBehaviour
 {
+    //all ingredients in game
     Dictionary<string, Ingredient> ingredientList = new Dictionary<string, Ingredient>();
+    //inventory
     Dictionary<string, Ingredient> materialList = new Dictionary<string, Ingredient>();
     Dictionary<string, Ingredient> potionList = new Dictionary<string, Ingredient>();
+    //all crafting potions in game (all possible crafting outcomes)
     Dictionary<string, Ingredient> craftList = new Dictionary<string, Ingredient>();
     // Start is called before the first frame update
     void Start()
