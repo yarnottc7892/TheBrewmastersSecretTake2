@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d674b1fa9889e04ead6c0d4386b9fcc, type: 3}
-  m_Name: GenericHeal
+  m_Script: {fileID: 11500000, guid: 1173095a92fea1944b547f7bd7771246, type: 3}
+  m_Name: Heal10
   m_EditorClassIdentifier: 
-  cost: 2
-  art: {fileID: 0}
-  description: Heals you
-  amount: 4
+  effectValue: 10
+  targetPlayer: 1

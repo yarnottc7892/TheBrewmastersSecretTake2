@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayAreaController : MonoBehaviour, IDropHandler
+public class PlayAreaController : MonoBehaviour// , IDropHandler
 {
-    public void OnDrop(PointerEventData eventData) 
-    {
-        eventData.pointerDrag.GetComponent<CardController>().data.Play();
-    }
+    //public void OnDrop(PointerEventData eventData) 
+    //{
+    //    CardController card = eventData.pointerDrag.GetComponent<CardController>();
+    //    card.data.Play(transform, transform);
+    //    StartCoroutine(card.discard());
+    //}
 }
