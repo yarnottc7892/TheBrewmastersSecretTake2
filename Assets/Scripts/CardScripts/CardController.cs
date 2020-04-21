@@ -5,13 +5,15 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IPointerDownHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler
+public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler
 {
     
     
     [SerializeField] private TextMeshProUGUI cost;
     [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private RectTransform discardPile;
+    [SerializeField] private RectTransform playSpot;
+    [SerializeField] private BattleManager battle;
 
     [SerializeField] private Canvas canvas;
     private CanvasGroup canvasGroup;
@@ -23,13 +25,14 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     public Card_Base data;
     public Vector3 startPos;
     public RectTransform rectTransform;
+    public bool targeting = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
         cost.text = data.cost.ToString();
-        description.text = data.description.ToString();
+        description.text = data.setDescription();
 
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
@@ -44,40 +47,38 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
  
     }
 
+    public void OnPointerUp(PointerEventData eventData) 
+    {
+        if (!data.checkSelfTargeting())
+        {
+            if (!targeting)
+            {
+                rectTransform.anchoredPosition = startPos;
+
+            } 
+            else
+            {
+                data.Play(battle.player, battle.enemy);
+                StartCoroutine(discard());
+            }
+        }
+        else
+        {
+            data.Play(battle.player, battle.enemy);
+            StartCoroutine(discard());
+        }
+
+        battle.currentCard = null;
+        
+    }
     // Card is clicked on
     public void OnPointerDown(PointerEventData eventData) 
     {
         // anim.SetBool("HoveredOver", false);
         sibOrder = transform.GetSiblingIndex();
         transform.SetAsLastSibling();
-    }
-
-    // Card starts being dragged
-    public void OnBeginDrag(PointerEventData eventData) 
-    {
-        foreach (Transform child in transform.parent.GetComponentInChildren<Transform>())
-        {
-            child.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        }
-
-        startPos = rectTransform.anchoredPosition;
-    }
-
-    // Card stops being dragged
-    public void OnEndDrag(PointerEventData eventData) 
-    {
-        foreach (Transform child in transform.parent.GetComponentInChildren<Transform>())
-        {
-            child.GetComponent<CanvasGroup>().blocksRaycasts = true;
-        }
-
-        transform.SetSiblingIndex(sibOrder);
-    }
-
-    // Card is being dragged
-    public void OnDrag(PointerEventData eventData) 
-    {
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        rectTransform.anchoredPosition = playSpot.anchoredPosition;
+        battle.currentCard = this;
     }
 
     // Card is hovered over
