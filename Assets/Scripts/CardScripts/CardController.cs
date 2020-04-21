@@ -7,26 +7,32 @@ using TMPro;
 
 public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler
 {
-    
-    
+    // Card elements to be set
     [SerializeField] private TextMeshProUGUI cost;
     [SerializeField] private TextMeshProUGUI description;
+
+    // Places the card needs to go
     [SerializeField] private RectTransform discardPile;
     [SerializeField] private RectTransform playSpot;
-    [SerializeField] private BattleManager battle;
-
-    [SerializeField] private Canvas canvas;
-    private CanvasGroup canvasGroup;
-    // Order in the sibling list
-    private int sibOrder;
-    private Animator anim;
     
 
+    // Utilities
+    [SerializeField] private BattleManager battle;
+    [SerializeField] private Canvas canvas;
+    private CanvasGroup canvasGroup;
+    private Animator anim;
+    private bool selected = false;
+    
+
+    // Order in the sibling list
+    private int sibOrder;
+
+    // Things that need to be accessed by other classes
     public Card_Base data;
     public Vector3 startPos;
     public RectTransform rectTransform;
     public bool targeting = false;
-
+    public bool playSelfTargetedCard = false;
 
     // Start is called before the first frame update
     void Start()
@@ -47,8 +53,11 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
  
     }
 
+    // Check what to do when the mouse button is lifted
     public void OnPointerUp(PointerEventData eventData) 
     {
+        selected = false;
+        anim.SetBool("HoveredOver", false);
         if (!data.checkSelfTargeting())
         {
             if (!targeting)
@@ -64,8 +73,16 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
         }
         else
         {
-            data.Play(battle.player, battle.enemy);
-            StartCoroutine(discard());
+            if (playSelfTargetedCard)
+            {
+                data.Play(battle.player, battle.enemy);
+                StartCoroutine(discard());
+            }
+            else
+            {
+                rectTransform.anchoredPosition = startPos;
+            }
+                
         }
 
         battle.currentCard = null;
@@ -74,11 +91,11 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
     // Card is clicked on
     public void OnPointerDown(PointerEventData eventData) 
     {
-        // anim.SetBool("HoveredOver", false);
         sibOrder = transform.GetSiblingIndex();
         transform.SetAsLastSibling();
         rectTransform.anchoredPosition = playSpot.anchoredPosition;
         battle.currentCard = this;
+        selected = true;
     }
 
     // Card is hovered over
@@ -90,12 +107,13 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
     // Card not hovered over
     public void OnPointerExit(PointerEventData eventData) 
     {
-        anim.SetBool("HoveredOver", false);
+        if (!selected)
+        {
+            anim.SetBool("HoveredOver", false);
+        }
     }
 
     public IEnumerator discard() {
-
-        Debug.Log("discarding");
 
         GetComponent<Animator>().SetTrigger("Discard");
 

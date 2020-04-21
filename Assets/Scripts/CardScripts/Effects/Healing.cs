@@ -7,7 +7,7 @@ public class Healing : Effect_Base
 {
     public override void DoEffect(Transform target) 
     {
-        Debug.Log("Heal yourself for: " + effectValue + "health");
+        target.GetComponent<Combatant_Base>().Heal(effectValue);
     }
 
     public override string generateDescription() 

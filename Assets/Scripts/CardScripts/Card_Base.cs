@@ -10,8 +10,10 @@ public class Card_Base : ScriptableObject
     public Sprite art;
     public string description = "";
 
+    // The list of the cards effects
     [SerializeField] private List<Effect_Base> effects = new List<Effect_Base>();
 
+    // Do each effect on the correct target
     public void Play(Transform player, Transform enemy) 
     {
         foreach(Effect_Base effect in effects)
@@ -27,6 +29,7 @@ public class Card_Base : ScriptableObject
         }
     }
 
+    // Generate the full description based on the effect descriptions
     public string setDescription() 
     {
         description = "";
@@ -38,6 +41,7 @@ public class Card_Base : ScriptableObject
         return description;
     }
 
+    // Check if all the effects target the player
     public bool checkSelfTargeting() 
     {
         foreach(Effect_Base effect in effects)

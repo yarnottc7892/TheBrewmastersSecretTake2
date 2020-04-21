@@ -26,18 +26,17 @@ public class BattleManager : MonoBehaviour
     {
         deckSize = deck.Count;
         nextCard = deckSize - 1;
+
+        for (int i = 0; i < cards.Count; i++)
+        {
+            StartCoroutine(drawCard(i));
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            for (int i = 0; i < cards.Count; i++)
-            {
-                StartCoroutine(drawCard(i));
-            }
-        }
+
     }
 
     private IEnumerator drawCard(int index) 

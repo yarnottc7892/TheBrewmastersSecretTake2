@@ -6,7 +6,9 @@ using UnityEngine;
 public class Damage : Effect_Base
 {
     public override void DoEffect(Transform target) {
-        Debug.Log("Do: " + effectValue + " damage to " + target.name);
+
+        target.GetComponent<EnemyController>().TakeDamage(effectValue);
+
     }
 
     public override string generateDescription() 

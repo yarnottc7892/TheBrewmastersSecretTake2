@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class EnemyController : MonoBehaviour, IDropHandler
+public class EnemyController : Combatant_Base, IDropHandler
 {
     [SerializeField] BattleManager battle;
 

@@ -1616,6 +1616,7 @@ MonoBehaviour:
   - {fileID: 920014081}
   - {fileID: 1400551765}
   - {fileID: 770335882}
+  deck: []
   player: {fileID: 1929972007}
   enemy: {fileID: 1421448932}
   currentCard: {fileID: 0}
@@ -2098,6 +2099,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37f0a091a247cce48ba5ec78613bc6cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  battle: {fileID: 1224261995}
 --- !u!114 &1608663090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2303,7 +2305,7 @@ PrefabInstance:
         type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 11400000, guid: 51129bab975405c46996e479e3a4007a,
+      objectReference: {fileID: 11400000, guid: 9caefc080f7eb9043976483795709e05,
         type: 2}
     - target: {fileID: 4467484652022103514, guid: f2118b4f15239d946a1f7df4efdd3651,
         type: 3}
@@ -2492,6 +2494,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1929972007}
   - component: {fileID: 1929972008}
+  - component: {fileID: 1929972009}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2563,6 +2566,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1929972009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929972006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f61e65ffba20b04fbc1466e2d52e977, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2036348529
 GameObject:
   m_ObjectHideFlags: 0
