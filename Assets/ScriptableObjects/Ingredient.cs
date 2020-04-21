@@ -9,6 +9,6 @@ public class Ingredient : ScriptableObject
     public string ingredientID;
     public string ingredientDisplayName;
     public string ingredientDesc;
-    public int invAmount = 0;
+    public int invAmount = -1;
 
 }

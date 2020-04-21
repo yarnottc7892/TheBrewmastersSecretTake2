@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 
 public class InventoryDragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    [SerializeField] private Canvas canvas;
-    private RectTransform rT;
+    [SerializeField] public Canvas canvas;
+    public RectTransform rT;
     private CanvasGroup cG;
     private Vector2 previousPos;
     private void Awake()

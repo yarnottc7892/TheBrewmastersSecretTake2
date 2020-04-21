@@ -4,50 +4,55 @@ using UnityEngine;
 
 public class IngredientManager : MonoBehaviour
 {
-    //all ingredients in game
-    Dictionary<string, Ingredient> ingredientList = new Dictionary<string, Ingredient>();
-    //inventory
-    Dictionary<string, Ingredient> materialList = new Dictionary<string, Ingredient>();
-    Dictionary<string, Ingredient> potionList = new Dictionary<string, Ingredient>();
-    //all crafting potions in game (all possible crafting outcomes)
-    Dictionary<string, Ingredient> craftList = new Dictionary<string, Ingredient>();
-    // Start is called before the first frame update
+    public List<Ingredient> mList, pList;
+    public Dictionary<string, Ingredient> materialList = new Dictionary<string, Ingredient>();
+    public Dictionary<string, Ingredient> potionList = new Dictionary<string, Ingredient>();
     void Start()
     {
         
+
     }
 
-    void AddMaterial(string ingredientID)
+    public void LoadIngredients()
     {
-        try
+        for (int i = 0; i < mList.Count; i++)
         {
-            materialList.Add(ingredientID, ingredientList[ingredientID]);
+            materialList.Add(mList[i].ingredientID, mList[i]);
+            Debug.Log("MaterialList COunt " + materialList.Count);
         }
-        catch
+        for (int i = 0; i < pList.Count; i++)
         {
+            potionList.Add(pList[i].ingredientID, pList[i]);
+        }
+    }
+
+    void AddIngredient(string ingredientID)
+    {
+        if (potionList.ContainsKey(ingredientID))
+        {
+            if (potionList[ingredientID].invAmount == -1)
+            {
+                potionList[ingredientID].invAmount++;
+            }
+            potionList[ingredientID].invAmount++;  
+        }
+        else if (materialList.ContainsKey(ingredientID))
+        {
+            if (materialList[ingredientID].invAmount == -1)
+            {
+                materialList[ingredientID].invAmount++;
+            }
             materialList[ingredientID].invAmount++;
         }
     }
 
-    void AddPotion(string ingredientID)
+    void RemoveIngredient(string ingredientID)
     {
-        try
+        if (potionList.ContainsKey(ingredientID))
         {
-            potionList.Add(ingredientID, ingredientList[ingredientID]);
+            potionList[ingredientID].invAmount--;
         }
-        catch
-        {
-            potionList[ingredientID].invAmount++;
-        }
-    }
-
-    void RemoveMaterial(string ingredientID)
-    {
-        if(materialList[ingredientID].invAmount == 1)
-        {
-            materialList.Remove(ingredientID);
-        }
-        else
+        else if(materialList.ContainsKey(ingredientID))
         {
             materialList[ingredientID].invAmount--;
         }
@@ -56,19 +61,20 @@ public class IngredientManager : MonoBehaviour
 
     void CombineIngredients(string ingredientID1, string ingredientID2)
     {
-        if((materialList.ContainsKey(ingredientID1) || potionList.ContainsKey(ingredientID1)) && (materialList.ContainsKey(ingredientID2) || potionList.ContainsKey(ingredientID2)))
+        if((materialList[ingredientID1].invAmount > 0 || potionList[ingredientID1].invAmount > 0)
+            && (materialList[ingredientID2].invAmount > 0 || potionList[ingredientID2].invAmount > 0))
         {
-            if(craftList.ContainsKey(ingredientID1 + ingredientID2))
+            if(potionList.ContainsKey(ingredientID1 + ingredientID2))
             {
-                AddPotion(ingredientID1 + ingredientID2);
-                RemoveMaterial(ingredientID1);
-                RemoveMaterial(ingredientID2);
+                AddIngredient(ingredientID1 + ingredientID2);
+                RemoveIngredient(ingredientID1);
+                RemoveIngredient(ingredientID2);
             }
-            else if(craftList.ContainsKey(ingredientID2 + ingredientID1))
+            else if(potionList.ContainsKey(ingredientID2 + ingredientID1))
             {
-                AddPotion(ingredientID2 + ingredientID1);
-                RemoveMaterial(ingredientID1);
-                RemoveMaterial(ingredientID2);
+                AddIngredient(ingredientID2 + ingredientID1);
+                RemoveIngredient(ingredientID1);
+                RemoveIngredient(ingredientID2);
             }
         }
     }
