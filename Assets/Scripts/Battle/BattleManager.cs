@@ -6,16 +6,26 @@ public class BattleManager : MonoBehaviour
 {
     [SerializeField] private RectTransform drawDeck;
     [SerializeField] private RectTransform discardDeck;
+    // [SerializeField] private Card_Base cardPrefab;
 
     [SerializeField] private List<Transform> cards = new List<Transform>();
     [SerializeField] private List<RectTransform> cardSpots = new List<RectTransform>();
 
-    private int cardsInHand = 0;
+    [SerializeField] private List<Card_Base> deck = new List<Card_Base>();
+
+    private int deckSize;
+    private int nextCard;
+
+    public Transform player;
+    public Transform enemy;
+
+    public CardController currentCard = null;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        deckSize = deck.Count;
+        nextCard = deckSize - 1;
     }
 
     // Update is called once per frame
@@ -48,9 +58,12 @@ public class BattleManager : MonoBehaviour
 
             timePassed += Time.deltaTime;
 
+            if (timePassed >= journeyTime)
+            {
+                cards[index].GetComponent<CardController>().startPos = cardRect.anchoredPosition;
+            }
+
             yield return null;
         }
-
-        
     }
 }
