@@ -6,6 +6,8 @@ public class InventoryManager : MonoBehaviour
 {
     IngredientManager ingredientManager;
     public List<InventorySlot> invSlot;
+    public InventorySlot craftSlot1, craftSlot2, productSlot;
+    private Ingredient craftIngredient1 = null, craftIngredient2 = null;
     List<GameObject> invDragDrop = new List<GameObject>();
     public GameObject dragDropPrefab;
     public Transform dragParent;
@@ -28,6 +30,9 @@ public class InventoryManager : MonoBehaviour
         for(int i=0; i<invSlot.Count; i++)
         {
             invDragDrop[i].GetComponent<InventoryDragDrop>().rT.anchoredPosition = invSlot[i].rT.anchoredPosition;
+            invDragDrop[i].GetComponent<InventoryDragDrop>().invSlot = invSlot[i];
+            invDragDrop[i].GetComponent<InventoryDragDrop>().craftSlot1 = craftSlot1;
+            invDragDrop[i].GetComponent<InventoryDragDrop>().craftSlot2 = craftSlot2;
         }
         LoadMaterials();
     }
@@ -38,8 +43,9 @@ public class InventoryManager : MonoBehaviour
         
     }
 
-    void LoadMaterials()
+    public void LoadMaterials()
     {
+        Debug.Log("LOADMATS");
         int i = 0;
         Debug.Log("MaterialList COunt in inv manager " + ingredientManager.materialList.Count);
         foreach (KeyValuePair<string, Ingredient> entry in ingredientManager.materialList)
@@ -48,11 +54,12 @@ public class InventoryManager : MonoBehaviour
             invDragDrop[i].GetComponent<IngredientDisplay>().SetImage();
             i++;
         }
-        print(i);
+        //print(i);
     }
 
-    void LoadPotions()
+    public void LoadPotions()
     {
+        Debug.Log("LOADPOTS");
         int i = 0;
 
         foreach (KeyValuePair<string, Ingredient> entry in ingredientManager.potionList)
@@ -60,6 +67,36 @@ public class InventoryManager : MonoBehaviour
             invDragDrop[i].GetComponent<IngredientDisplay>().ingredient = entry.Value;
             invDragDrop[i].GetComponent<IngredientDisplay>().image.sprite = entry.Value.sprite;
             i++;
+        }
+    }
+
+    public void CraftSlotted(Ingredient i, InventorySlot iS)
+    {
+        if(iS == craftSlot1)
+        {
+            craftIngredient1 = i;
+        }
+        else if(iS == craftSlot2)
+        {
+            craftIngredient2 = i;
+        }
+        if(craftIngredient1 != null && craftIngredient2 != null)
+        {
+            ingredientManager.CombineIngredients(craftIngredient1.ingredientID, craftIngredient2.ingredientID);
+            //create product drag drop
+
+        }
+    }
+
+    public void CraftUnslotted(InventorySlot iS)
+    {
+        if (iS == craftSlot1)
+        {
+            craftIngredient1 = null;
+        }
+        else if (iS == craftSlot2)
+        {
+            craftIngredient2 = null;
         }
     }
 }
