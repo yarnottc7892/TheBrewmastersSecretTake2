@@ -23,10 +23,11 @@ public class EnemyController : Combatant_Base, IDropHandler
 
         CardController card = eventData.pointerDrag.GetComponent<CardController>();
         card.data.Play(transform, transform);
-        StartCoroutine(card.discard());
+        card.discard();
     }
 
-    private void OnMouseEnter() {
+    private void OnMouseEnter() 
+    { 
         if (battle.currentCard != null)
         {
             battle.currentCard.targeting = true;

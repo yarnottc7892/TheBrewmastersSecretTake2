@@ -1,20 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class BattleManager : MonoBehaviour
 {
     [SerializeField] private RectTransform drawDeck;
     [SerializeField] private RectTransform discardDeck;
-    // [SerializeField] private Card_Base cardPrefab;
+    [SerializeField] private CardPool pool;
+    [SerializeField] private Card_Base cardData;
 
-    [SerializeField] private List<Transform> cards = new List<Transform>();
     [SerializeField] private List<RectTransform> cardSpots = new List<RectTransform>();
 
     [SerializeField] private List<Card_Base> deck = new List<Card_Base>();
 
     private int deckSize;
     private int nextCard;
+    private int handSize = 5;
 
     public Transform player;
     public Transform enemy;
@@ -27,42 +29,41 @@ public class BattleManager : MonoBehaviour
         deckSize = deck.Count;
         nextCard = deckSize - 1;
 
-        for (int i = 0; i < cards.Count; i++)
-        {
-            StartCoroutine(drawCard(i));
-        }
+        drawHand();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            drawHand();
+        }
     }
 
-    private IEnumerator drawCard(int index) 
+    private void drawCard(int index) 
     {
+        var card = CardPool.Instance.Get();
+        card.setData(cardData);
+        card.gameObject.SetActive(true);
+        card.GetComponent<Animator>().SetTrigger("Spawn");
 
-        RectTransform cardRect = cards[index].GetComponent<RectTransform>();
+        RectTransform cardRect = card.GetComponent<RectTransform>();
         cardRect.anchoredPosition = drawDeck.anchoredPosition;
-        cards[index].GetComponent<Animator>().SetTrigger("Spawn");
+        cardRect.DOAnchorPos(cardSpots[index].anchoredPosition, 0.5f).OnComplete(() => setCardPos(card, cardRect));
+    }
 
-        float journeyTime = 0.5f;
-        float timePassed = 0f;
-        
+    private void setCardPos(CardController card, RectTransform cardRect) 
+    {
+        card.startPos = cardRect.anchoredPosition;
+    }
 
-        while (cardRect.anchoredPosition != cardSpots[index].anchoredPosition)
+    private void drawHand() 
+    {
+        Debug.Log("Draw Hand");
+        for (int i = 0; i < handSize; i++)
         {
-            float fracJourney = timePassed / journeyTime;
-            cardRect.anchoredPosition = Vector3.Lerp(drawDeck.anchoredPosition, cardSpots[index].anchoredPosition, fracJourney);
-
-            timePassed += Time.deltaTime;
-
-            if (timePassed >= journeyTime)
-            {
-                cards[index].GetComponent<CardController>().startPos = cardRect.anchoredPosition;
-            }
-
-            yield return null;
+            drawCard(i);
         }
     }
 }

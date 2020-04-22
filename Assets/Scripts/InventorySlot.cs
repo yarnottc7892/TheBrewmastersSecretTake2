@@ -16,6 +16,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         if(eventData.pointerDrag != null)
         {
             eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = rT.anchoredPosition;
+            
         }
     }
 }
