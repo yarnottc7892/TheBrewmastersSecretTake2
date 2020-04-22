@@ -9,6 +9,7 @@ public class InventoryDragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragH
     public RectTransform rT;
     private CanvasGroup cG;
     private Vector2 previousPos;
+    public InventorySlot craftSlot1, craftSlot2, invSlot, currSlot;
     private void Awake()
     {
         rT = GetComponent<RectTransform>();
@@ -31,7 +32,7 @@ public class InventoryDragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragH
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (eventData.pointerCurrentRaycast.gameObject == null || !eventData.pointerCurrentRaycast.gameObject.GetComponent<InventorySlot>())
+        if (eventData.pointerCurrentRaycast.gameObject.GetComponent<InventorySlot>() != invSlot && eventData.pointerCurrentRaycast.gameObject.GetComponent<InventorySlot>() != craftSlot1 && eventData.pointerCurrentRaycast.gameObject.GetComponent<InventorySlot>() != craftSlot2)
         {
             Debug.LogError("Not over slot");
             rT.anchoredPosition = previousPos;
