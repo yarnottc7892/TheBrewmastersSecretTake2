@@ -9,17 +9,22 @@ public class InventoryDragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragH
     public RectTransform rT;
     private CanvasGroup cG;
     private Vector2 previousPos;
-    public InventorySlot craftSlot1, craftSlot2, invSlot, currSlot;
+    public InventorySlot craftSlot1, craftSlot2, invSlot, productSlot, currSlot;
     private void Awake()
     {
         rT = GetComponent<RectTransform>();
         cG = GetComponent<CanvasGroup>();
     }
+
+    public void SetAlpha(float num)
+    {
+        cG.alpha = num;
+    }
     public void OnBeginDrag(PointerEventData eventData)
     {
         previousPos = rT.anchoredPosition;
         Debug.Log("Begin Drag");
-        cG.alpha = .7f;
+        //cG.alpha = .7f;
         cG.blocksRaycasts = false;
         //throw new System.NotImplementedException();
     }
@@ -34,11 +39,10 @@ public class InventoryDragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragH
     {
         if (eventData.pointerCurrentRaycast.gameObject.GetComponent<InventorySlot>() != invSlot && eventData.pointerCurrentRaycast.gameObject.GetComponent<InventorySlot>() != craftSlot1 && eventData.pointerCurrentRaycast.gameObject.GetComponent<InventorySlot>() != craftSlot2)
         {
-            Debug.LogError("Not over slot");
             rT.anchoredPosition = previousPos;
         }
         Debug.Log("End Drag");
-        cG.alpha = 1.0f;
+        //cG.alpha = 1.0f;
         cG.blocksRaycasts = true;
         //throw new System.NotImplementedException();
     }

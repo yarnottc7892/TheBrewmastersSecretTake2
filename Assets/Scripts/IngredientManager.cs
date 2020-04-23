@@ -59,7 +59,7 @@ public class IngredientManager : MonoBehaviour
         
     }
 
-    public void CombineIngredients(string ingredientID1, string ingredientID2)
+    public string CombineIngredients(string ingredientID1, string ingredientID2)
     {
         Debug.Log("COMBINE " + ingredientID1 + " AND " + ingredientID2 + materialList.ContainsKey(ingredientID1) + materialList.ContainsKey(ingredientID2));
         if(((materialList.ContainsKey(ingredientID1) && materialList.ContainsKey(ingredientID2)) && ((materialList[ingredientID1].invAmount > 0) && (materialList[ingredientID2].invAmount > 0))) ||
@@ -72,21 +72,50 @@ public class IngredientManager : MonoBehaviour
                 AddIngredient(ingredientID1 + ingredientID2);
                 RemoveIngredient(ingredientID1);
                 RemoveIngredient(ingredientID2);
+                return ingredientID1 + ingredientID2;
             }
             else if(potionList.ContainsKey(ingredientID2 + ingredientID1))
             {
                 AddIngredient(ingredientID2 + ingredientID1);
                 RemoveIngredient(ingredientID1);
                 RemoveIngredient(ingredientID2);
+                return ingredientID2 + ingredientID1;
             }
             else
             {
                 //mistake
             }
+            
         }
+        return "";
     }
 
-    
+    public string FindComboID(string ingredientID1, string ingredientID2)
+    {
+        Debug.Log("COMBINE " + ingredientID1 + " AND " + ingredientID2 + materialList.ContainsKey(ingredientID1) + materialList.ContainsKey(ingredientID2));
+        if (((materialList.ContainsKey(ingredientID1) && materialList.ContainsKey(ingredientID2)) && ((materialList[ingredientID1].invAmount > 0) && (materialList[ingredientID2].invAmount > 0))) ||
+            ((materialList.ContainsKey(ingredientID1) && potionList.ContainsKey(ingredientID2)) && ((materialList[ingredientID1].invAmount > 0) && (potionList[ingredientID2].invAmount > 0))) ||
+            ((potionList.ContainsKey(ingredientID1) && materialList.ContainsKey(ingredientID2)) && ((potionList[ingredientID1].invAmount > 0) && (materialList[ingredientID2].invAmount > 0))) ||
+            ((potionList.ContainsKey(ingredientID1) && potionList.ContainsKey(ingredientID2)) && ((potionList[ingredientID1].invAmount > 0) && (potionList[ingredientID2].invAmount > 0))))
+        {
+            if (potionList.ContainsKey(ingredientID1 + ingredientID2))
+            {
+                print("COMBO12");
+                return ingredientID1 + ingredientID2;
+            }
+            else if (potionList.ContainsKey(ingredientID2 + ingredientID1))
+            {
+                print("COMBO21");
+                return ingredientID2 + ingredientID1;
+            }
+            else
+            {
+                //mistake
+            }
+
+        }
+        return "";
+    }
 
     // Update is called once per frame
     void Update()

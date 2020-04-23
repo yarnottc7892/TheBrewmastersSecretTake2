@@ -54,6 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredient: {fileID: 0}
   image: {fileID: 0}
+  unknown: {fileID: 21300000, guid: 6e9fe80d0b3edc641ba2a2db59721823, type: 3}
 --- !u!222 &279109494279229984
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -104,6 +105,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
   rT: {fileID: 279109494279229987}
+  craftSlot1: {fileID: 0}
+  craftSlot2: {fileID: 0}
+  invSlot: {fileID: 0}
+  productSlot: {fileID: 0}
+  currSlot: {fileID: 0}
 --- !u!225 &279109494279229998
 CanvasGroup:
   m_ObjectHideFlags: 0

@@ -16,4 +16,4 @@ MonoBehaviour:
   ingredientID: spidereye
   ingredientDisplayName: Spider Eye
   ingredientDesc: Eye of Spider
-  invAmount: -1
+  invAmount: 2

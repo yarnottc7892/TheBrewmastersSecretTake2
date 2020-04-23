@@ -7,6 +7,7 @@ public class IngredientDisplay : MonoBehaviour
 {
     public Ingredient ingredient;
     public Image image;
+    public Sprite unknown;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +17,15 @@ public class IngredientDisplay : MonoBehaviour
     public void SetImage()
     {
         image = GetComponent<Image>();
-        image.sprite = ingredient.sprite;
+        if(ingredient.invAmount < 0)
+        {
+            image.sprite = unknown;
+        }
+        else
+        {
+            image.sprite = ingredient.sprite;
+        }
+        
     }
 
     // Update is called once per frame
