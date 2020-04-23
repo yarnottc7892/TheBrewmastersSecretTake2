@@ -63,6 +63,7 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
             if (!targeting)
             {
                 rectTransform.DOAnchorPos(startPos, 0.1f).OnComplete(() => setInteractable(true));
+                transform.SetSiblingIndex(sibOrder);
 
             } 
             else
@@ -81,6 +82,7 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
             else
             {
                 rectTransform.DOAnchorPos(startPos, 0.1f).OnComplete(() => setInteractable(true));
+                transform.SetSiblingIndex(sibOrder);
 
             }
         }
@@ -131,6 +133,8 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
         targeting = false;
 
         interactable = true;
+
+        battle.removeCard(this);
 
         Vector3 start = rectTransform.anchoredPosition;
 

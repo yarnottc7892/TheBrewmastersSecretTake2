@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 public class EnemyController : Combatant_Base, IDropHandler
 {
@@ -31,17 +32,17 @@ public class EnemyController : Combatant_Base, IDropHandler
         if (battle.currentCard != null)
         {
             battle.currentCard.targeting = true;
-        }
-
-        transform.localScale = transform.localScale * 1.2f;
+            transform.localScale = transform.localScale * 1.1f;
+        }  
     }
 
     private void OnMouseExit() {
+
         if (battle.currentCard != null)
         {
             battle.currentCard.targeting = false;
         }
 
-        transform.localScale = Vector3.one * 0.6741f;
+        transform.localScale = Vector3.one * 0.5f;
     }
 }

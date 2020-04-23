@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Combatant_Base : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Combatant_Base : MonoBehaviour
 
     public void TakeDamage(int damage) 
     {
+
+        transform.DOShakePosition(0.1f, vibrato: 100, randomness: 100);
         Debug.Log(name + " took " + damage + " damage");
     }
 

@@ -1,22 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using DG.Tweening;
+
 
 public class BattleManager : MonoBehaviour
 {
     [SerializeField] private RectTransform drawDeck;
     [SerializeField] private RectTransform discardDeck;
     [SerializeField] private CardPool pool;
-    [SerializeField] private Card_Base cardData;
+    [SerializeField] private Deck deck;
+    [SerializeField] private TextMeshProUGUI cardsInDraw;
+    [SerializeField] private TextMeshProUGUI cardsInDiscard;
 
-    [SerializeField] private List<RectTransform> cardSpots = new List<RectTransform>();
+    [SerializeField] private RectTransform middleCardSpot;
 
-    [SerializeField] private List<Card_Base> deck = new List<Card_Base>();
-
-    private int deckSize;
-    private int nextCard;
-    private int handSize = 5;
+    [SerializeField] private int handSize = 5;
+    private float distanceBetweenCards = 200f;
+    private List<CardController> cardsInHand = new List<CardController>();
 
     public Transform player;
     public Transform enemy;
@@ -24,12 +27,12 @@ public class BattleManager : MonoBehaviour
     public CardController currentCard = null;
 
     // Start is called before the first frame update
-    void Start()
+    void Start() 
     {
-        deckSize = deck.Count;
-        nextCard = deckSize - 1;
-
-        drawHand();
+        deck.shuffleDraw();
+        // drawHand();
+        cardsInDraw.text = deck.draw.Count.ToString();
+        cardsInDiscard.text = 0.ToString();
     }
 
     // Update is called once per frame
@@ -41,29 +44,80 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void drawCard(int index) 
+    private void drawCard() 
     {
         var card = CardPool.Instance.Get();
-        card.setData(cardData);
+
+        if (deck.draw.Count == 0)
+        {
+            deck.shuffleDiscard();
+            cardsInDraw.text = deck.draw.Count.ToString();
+            cardsInDiscard.text = 0.ToString();
+        }
+
+        card.setData(deck.draw[deck.draw.Count - 1]);
+        deck.removeCardFromDrawAt(deck.draw.Count - 1);
+        cardsInDraw.text = deck.draw.Count.ToString();
         card.gameObject.SetActive(true);
         card.GetComponent<Animator>().SetTrigger("Spawn");
 
+        cardsInHand.Add(card);
+
         RectTransform cardRect = card.GetComponent<RectTransform>();
         cardRect.anchoredPosition = drawDeck.anchoredPosition;
-        cardRect.DOAnchorPos(cardSpots[index].anchoredPosition, 0.5f).OnComplete(() => setCardPos(card, cardRect));
-    }
 
-    private void setCardPos(CardController card, RectTransform cardRect) 
-    {
-        card.startPos = cardRect.anchoredPosition;
+        generateCardPositions();
+
     }
 
     private void drawHand() 
     {
-        Debug.Log("Draw Hand");
         for (int i = 0; i < handSize; i++)
         {
-            drawCard(i);
+            drawCard();
         }
+    }
+
+    private void generateCardPositions() {
+
+        float distanceFromMiddle = 0f;
+        float firstCardXPos = 0f;
+
+        if (cardsInHand.Count % 2 == 0)
+        {
+            distanceFromMiddle = distanceBetweenCards / 2;
+            firstCardXPos = middleCardSpot.anchoredPosition.x - distanceFromMiddle - (distanceBetweenCards * ((cardsInHand.Count / 2) - 1));
+        } 
+        else
+        {
+            firstCardXPos = middleCardSpot.anchoredPosition.x - distanceFromMiddle - (distanceBetweenCards * (cardsInHand.Count / 2));
+        }
+
+        for (int i = 0; i < cardsInHand.Count; i++)
+        {
+            RectTransform cardRect = cardsInHand[i].GetComponent<RectTransform>();
+
+            float newXPos = firstCardXPos + (distanceBetweenCards * i);
+            Vector2 newPos = new Vector2(newXPos, cardRect.anchoredPosition.y);
+            cardRect.DOAnchorPos(newPos, 0.5f).OnComplete(setCardPositions);
+
+        }
+    }
+
+    private void setCardPositions() 
+    {
+        foreach(CardController card in cardsInHand)
+        {
+            card.startPos = card.GetComponent<RectTransform>().anchoredPosition;
+        }
+        
+    }
+
+    public void removeCard(CardController card) 
+    {
+        cardsInHand.Remove(card);
+        deck.addCardToDiscard(card.data);
+        cardsInDiscard.text = deck.discard.Count.ToString();
+        generateCardPositions();
     }
 }
