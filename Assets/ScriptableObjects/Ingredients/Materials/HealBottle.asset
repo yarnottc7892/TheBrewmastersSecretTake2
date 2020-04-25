@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 100cf915951be6f4db455667d5535f38, type: 3}
-  m_Name: SpiderEye
+  m_Name: HealBottle
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: b9f0af40d094da14eb3ac9d9f93b5ad1, type: 3}
-  ingredientID: spidereye
-  ingredientDisplayName: Spider Eye
-  ingredientDesc: Eye of Spider
-  invAmount: 2
+  sprite: {fileID: 0}
+  ingredientID: HealBottle
+  ingredientDisplayName: Heal Bottle
+  ingredientDesc: Bottle of Heal
+  invAmount: -1

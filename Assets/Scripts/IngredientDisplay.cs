@@ -12,6 +12,11 @@ public class IngredientDisplay : MonoBehaviour
     void Start()
     {
         //SetImage();
+        if(ingredient != null)
+        {
+            ingredient.invAmount = -1;
+        }
+        
     }
 
     public void SetImage()
@@ -24,6 +29,14 @@ public class IngredientDisplay : MonoBehaviour
         else
         {
             image.sprite = ingredient.sprite;
+        }
+        if(ingredient.invAmount > -1)
+        {
+            GetComponentInChildren<Text>().text = "" + ingredient.invAmount;
+        }
+        else
+        {
+            GetComponentInChildren<Text>().text = "";
         }
         
     }

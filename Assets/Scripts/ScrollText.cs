@@ -23,10 +23,11 @@ public class ScrollText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentText.Length != fullText.Length)
+        if (currentText.Length != fullText.Length && gameObject.activeInHierarchy)
         {
             if (delay <= 0.0f)
             {
+                print(counter);
                 currentText = fullText.Substring(0, counter);
                 text.text = currentText;
                 counter++;
@@ -45,8 +46,13 @@ public class ScrollText : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && done && GameManager.textBoxOn)
         {
-            Destroy(transform.parent.gameObject);
-            Destroy(gameObject);
+            counter = 0;
+            currentText = "";
+            done = false;
+            delay = 0.0f;
+            fullText = "";
+            transform.parent.gameObject.SetActive(false);
+            gameObject.SetActive(false);
             GameManager.textBoxOn = false;
         }
         else if (Input.GetKeyDown(KeyCode.E) && !done && GameManager.textBoxOn)

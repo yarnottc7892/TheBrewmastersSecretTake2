@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,12 +9,13 @@ public class Interaction : MonoBehaviour
     private bool overlap = false;
     public GameObject textBox;
     public string textString;
-    private Transform canvas;
+    private GameObject player;
+    public Ingredient ingredient;
 
     // Start is called before the first frame update
     void Start()
     {
-        canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
+
     }
 
     // Update is called once per frame
@@ -21,10 +23,14 @@ public class Interaction : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && overlap && !GameManager.textBoxOn)
         {
-            var textB = Instantiate(textBox);
-            textB.transform.SetParent(canvas.transform);
-            textB.transform.GetChild(0).GetComponent<ScrollText>().fullText = textString;
+            textBox.SetActive(true);
+            textBox.transform.GetChild(0).gameObject.SetActive(true);
+            textBox.transform.GetChild(0).GetComponent<ScrollText>().fullText = textString;
+            var playerCont = player.GetComponent<PlayerControl>();
+
+            player.GetComponent<PlayerControl>().ingManager.AddIngredient(ingredient.ingredientID);
             GameManager.textBoxOn = true;
+            Destroy(gameObject);
         }
     }
 
@@ -33,6 +39,7 @@ public class Interaction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             overlap = true;
+            player = other.gameObject;
         }
     }
 
