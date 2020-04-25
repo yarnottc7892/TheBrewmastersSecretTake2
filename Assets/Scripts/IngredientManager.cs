@@ -26,7 +26,7 @@ public class IngredientManager : MonoBehaviour
         }
     }
 
-    void AddIngredient(string ingredientID)
+    public void AddIngredient(string ingredientID)
     {
         if (potionList.ContainsKey(ingredientID))
         {

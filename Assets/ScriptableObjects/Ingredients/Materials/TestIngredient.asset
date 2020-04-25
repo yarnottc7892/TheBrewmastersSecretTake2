@@ -16,4 +16,4 @@ MonoBehaviour:
   ingredientID: test
   ingredientDisplayName: Test Ingredient
   ingredientDesc: I am a test
-  invAmount: 2
+  invAmount: -1
