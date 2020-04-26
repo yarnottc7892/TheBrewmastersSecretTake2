@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject craftingUI;
 
+    public List<Card_Base> cards = new List<Card_Base>();
+
     public List<Card_Base> deck = new List<Card_Base>();
 
     void Awake()
@@ -71,13 +73,16 @@ public class GameManager : MonoBehaviour
 
     public static void AddCard(string id)
     {
-
+        var card = Instance.cards.Find(x => x.name == id);
+        Instance.deck.Add(card);
     }
 
-    private static Card_Base CreateCard()
+    public static void RemoveCard(string id)
     {
-        return new Card_Base();
+        var card = Instance.cards.Find(x => x.name == id);
+        Instance.deck.Remove(card);
     }
+
 }
 
 

@@ -36,7 +36,7 @@ public class IngredientManager : MonoBehaviour
             }
             potionList[ingredientID].invAmount++;
 
-            GameManager.AddCard(ingredientID);
+            GameManager.AddCard(potionList[ingredientID].name);
 
         }
         else if (materialList.ContainsKey(ingredientID))
@@ -54,6 +54,8 @@ public class IngredientManager : MonoBehaviour
         if (potionList.ContainsKey(ingredientID))
         {
             potionList[ingredientID].invAmount--;
+
+            GameManager.RemoveCard(potionList[ingredientID].name);
         }
         else if(materialList.ContainsKey(ingredientID))
         {
