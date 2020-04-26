@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cdf1dd27c233f340ab5649ea40bb144, type: 3}
+  m_Name: SupremePoisonDefense
+  m_EditorClassIdentifier: 
+  name: Supreme Poison Defense
+  cost: 2
+  art: {fileID: 0}
+  description: 
+  effects:
+  - {fileID: 11400000, guid: e051427d2e9998d4b8d22c7276820643, type: 2}
+  - {fileID: 11400000, guid: d4e38fca934bd6749a418afb40335dcf, type: 2}

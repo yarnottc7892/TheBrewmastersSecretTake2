@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Heal5
   m_EditorClassIdentifier: 
   effectValue: 5
-  targetPlayer: 0
+  targetPlayer: 1

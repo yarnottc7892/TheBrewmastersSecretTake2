@@ -10,8 +10,8 @@ public class Combatant_Base : MonoBehaviour
 
     [SerializeField] private ParticleSystem heal;
 
-    [SerializeField] private int health;
-    private int maxHealth;
+    public int health;
+    protected int maxHealth;
     [SerializeField] private int shield = 0;
     [SerializeField] private int poison = 0;
 
@@ -39,6 +39,11 @@ public class Combatant_Base : MonoBehaviour
             health += shield;
             OnHealthChange?.Invoke(health, maxHealth);
             shield = 0;
+        }
+
+        if (health < 0)
+        {
+            health = 0;
         }
 
         OnChangeShield?.Invoke(shield);
@@ -70,6 +75,10 @@ public class Combatant_Base : MonoBehaviour
         if (poison != 0)
         {
             health -= poison;
+            if(health < 0)
+            {
+                health = 0;
+            }
             poison--;
             OnHealthChange.Invoke(health, maxHealth);
             OnTakePoison?.Invoke(poison);

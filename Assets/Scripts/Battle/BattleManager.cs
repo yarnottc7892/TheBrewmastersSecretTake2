@@ -13,6 +13,8 @@ public class BattleManager : MonoBehaviour
     public enum BattleState { Start, EnemyTurn, PlayerTurn, Win, Lose }
     private BattleState state = BattleState.Start;
     private int round = 0;
+    public int energyPerTurn;
+    public int currentEnergy;
 
     [Header("References Needed")]
     [SerializeField] private RectTransform drawDeck;
@@ -22,6 +24,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI cardsInDraw;
     [SerializeField] private TextMeshProUGUI cardsInDiscard;
     [SerializeField] private RectTransform middleCardSpot;
+    [SerializeField] private TextMeshProUGUI energy;
 
     [Header("Hand And Card Settings")]
     [SerializeField] private int handSize = 5;
@@ -147,47 +150,86 @@ public class BattleManager : MonoBehaviour
 
     public void removeCard(CardController card) 
     {
+        if (state == BattleState.PlayerTurn)
+        {
+            currentEnergy -= card.data.cost;
+            energy.text = currentEnergy + "/" + energyPerTurn;
+        }
         cardsInHand.Remove(card);
         deck.addCardToDiscard(card.data);
         cardsInDiscard.text = deck.discard.Count.ToString();
         generateCardPositions();
     }
 
-    private void playerTurn() 
+    public void playerTurn() 
     {
         PlayerController playerScript = player.GetComponent<PlayerController>();
+        EnemyController enemyScript = enemy.GetComponent<EnemyController>();
 
-        round++;
+        if(playerScript.health <= 0)
+        {
+            playerWin();
+            return;
+        }
+        else if(enemyScript.health <= 0)
+        {
+            playerLose();
+            return;
+        }
+        enemyScript.GetComponent<EnemyController>().decideTurn();
+
 
         playerScript.startTurn();
 
         drawHand();
         cardsInDraw.text = deck.draw.Count.ToString();
         cardsInDiscard.text = 0.ToString();
-        
+
+        currentEnergy = energyPerTurn;
+        energy.text = currentEnergy + "/" + energyPerTurn;
+
 
         foreach (CardController card in cardsInHand)
         {
             card.GetComponent<CanvasGroup>().blocksRaycasts = true;
         }
+
+        state = BattleState.PlayerTurn;
     }
 
     private void enemyTurn() 
     {
+
         EnemyController enemyScript = enemy.GetComponent<EnemyController>();
+
+        foreach(CardController card in cardsInHand)
+        {
+            card.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        }
 
         round++;
 
-        enemyScript.startTurn();
+        StartCoroutine(enemyScript.takeTurn());
     }
 
     public void endTurn() 
     {
-        for(int i = cardsInHand.Count - 1; i >= 0; i--)
+        state = BattleState.EnemyTurn;
+
+        for (int i = cardsInHand.Count - 1; i >= 0; i--)
         {
             cardsInHand[i].discard();
         }
 
         enemyTurn();
+    }
+
+    private void playerWin() 
+    {
+        Debug.Log("Player Wins!");
+    }
+
+    private void playerLose() {
+        Debug.Log("Player Loses :(");
     }
 }

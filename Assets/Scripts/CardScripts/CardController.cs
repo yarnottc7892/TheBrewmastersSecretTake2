@@ -61,31 +61,11 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
     {
         if (!data.checkSelfTargeting())
         {
-            if (!targeting)
-            {
-                rectTransform.DOAnchorPos(startPos, 0.1f).OnComplete(() => changeState(CardState.Normal));
-                noLongerHover();
-
-            }
-            else
-            {
-                data.Play(battle.player, battle.enemy);
-                discard();
-            }
+            playCardIfCan(targeting);
         }
         else
         {
-            if (playSelfTargetedCard)
-            {
-                data.Play(battle.player, battle.enemy);
-                discard();
-            }
-            else
-            {
-                rectTransform.DOAnchorPos(startPos, 0.1f).OnComplete(() => changeState(CardState.Normal));
-                noLongerHover();
-
-            }
+            playCardIfCan(playSelfTargetedCard);
         }
 
 
@@ -169,6 +149,20 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
             canvasGroup.blocksRaycasts = true;
             currentState = CardState.Normal;
             CardPool.Instance.ReturnToPool(this);
+        }
+    }
+
+    private void playCardIfCan(bool check) 
+    {
+        if (check && battle.currentEnergy >= data.cost)
+        {
+            data.Play(battle.player, battle.enemy);
+            discard();
+        } 
+        else
+        {
+            rectTransform.DOAnchorPos(startPos, 0.1f).OnComplete(() => changeState(CardState.Normal));
+            noLongerHover();
         }
     }
 }

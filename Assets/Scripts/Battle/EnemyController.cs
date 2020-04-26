@@ -2,11 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
 using DG.Tweening;
 
 public class EnemyController : Combatant_Base, IDropHandler
 {
+    public Enemy_Base data;
+    [SerializeField] private TextMeshProUGUI nameText;
 
+    public int decidedAction;
+
+    private void Start() {
+
+        maxHealth = data.maxHealth;
+        health = maxHealth;
+        nameText.text = data.name;
+        GetComponent<SpriteRenderer>().sprite = data.art;
+        OnSetup?.Invoke(maxHealth);
+    }
     public void OnDrop(PointerEventData eventData) 
     {
 
@@ -36,5 +49,39 @@ public class EnemyController : Combatant_Base, IDropHandler
         }
 
         transform.localScale = Vector3.one * 0.5f;
+    }
+
+    public void TakeTurn() 
+    {
+
+
+    }
+
+    public void decideTurn() 
+    {
+        decidedAction = Random.Range(0, 1000) % data.actions.Count;
+        Debug.Log("Decided Action:" + decidedAction);
+    }
+
+    public IEnumerator takeTurn() 
+    {
+        startTurn();
+
+        yield return new WaitForSeconds(0.5f);
+
+        Transform target;
+        if (data.actions[decidedAction].targetPlayer)
+        {
+            target = battle.enemy;
+        } 
+        else
+        {
+            target = battle.player;
+        }
+        data.actions[decidedAction].DoEffect(target);
+
+        yield return new WaitForSeconds(0.5f);
+
+        battle.playerTurn();
     }
 }
