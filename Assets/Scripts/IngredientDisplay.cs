@@ -7,37 +7,57 @@ public class IngredientDisplay : MonoBehaviour
 {
     public Ingredient ingredient;
     public Image image;
+    public SpriteRenderer sr;
     public Sprite unknown;
+    public bool isImage = true;
+    bool firstRun = true;
     // Start is called before the first frame update
     void Start()
     {
         //SetImage();
-        if(ingredient != null)
-        {
-            ingredient.invAmount = -1;
-        }
         
+
+        if (!isImage)
+        {
+            SetImage();
+        }
+        else if(firstRun && ingredient != null)
+        {
+            print("set to -1");
+            ingredient.invAmount = -1;
+            firstRun = false;
+        }
+
     }
 
     public void SetImage()
     {
-        image = GetComponent<Image>();
-        if(ingredient.invAmount < 0)
+        if (isImage)
         {
-            image.sprite = unknown;
+            image = GetComponent<Image>();
+            if (ingredient.invAmount < 0)
+            {
+                image.sprite = unknown;
+            }
+            else
+            {
+                image.sprite = ingredient.sprite;
+            }
+            if (ingredient.invAmount > -1)
+            {
+                GetComponentInChildren<Text>().text = "" + ingredient.invAmount;
+            }
+            else
+            {
+                GetComponentInChildren<Text>().text = "";
+            }
         }
         else
         {
-            image.sprite = ingredient.sprite;
+            sr = GetComponent<SpriteRenderer>();
+            sr.sprite = ingredient.sprite;
         }
-        if(ingredient.invAmount > -1)
-        {
-            GetComponentInChildren<Text>().text = "" + ingredient.invAmount;
-        }
-        else
-        {
-            GetComponentInChildren<Text>().text = "";
-        }
+        
         
     }
 

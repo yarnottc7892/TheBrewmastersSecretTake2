@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100cf915951be6f4db455667d5535f38, type: 3}
   m_Name: SupremeDefensePoison
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 2056026783510651951, guid: 48670c64c25a70d4686fb3e275b4007a, type: 3}
   ingredientID: DefenseBottleDefenseRootNormalBottlePoisonMushroom
   ingredientDisplayName: Supreme Defense-P
   ingredientDesc: Defense-P of Supreme

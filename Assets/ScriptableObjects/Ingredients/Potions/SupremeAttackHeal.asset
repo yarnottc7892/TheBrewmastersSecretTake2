@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100cf915951be6f4db455667d5535f38, type: 3}
   m_Name: SupremeAttackHeal
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 3010872237018403443, guid: aa54223d3d586d14b998e86c2d64d39b, type: 3}
   ingredientID: AttackBottleAttackFlowerNormalBottleHealHerb
   ingredientDisplayName: Supreme Attack-H
   ingredientDesc: Attack-H of Supreme

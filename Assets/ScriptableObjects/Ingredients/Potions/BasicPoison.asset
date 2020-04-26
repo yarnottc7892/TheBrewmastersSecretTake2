@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100cf915951be6f4db455667d5535f38, type: 3}
   m_Name: BasicPoison
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 12104ffcbad1630458843cda8cd17702, type: 3}
   ingredientID: NormalBottlePoisonMushroom
   ingredientDisplayName: Basic Poison
   ingredientDesc: Poison of Basic
