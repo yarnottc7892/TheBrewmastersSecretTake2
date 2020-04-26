@@ -185,35 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dd20e133ba75ec488923d56629f0950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  draw:
-  - {fileID: 11400000, guid: 7a0829594696a324abef1032567ae21a, type: 2}
-  - {fileID: 11400000, guid: 529e79406a63acb44a46a75cd5731b12, type: 2}
-  - {fileID: 11400000, guid: 249b1fab44a857549b124bb74ec39b67, type: 2}
-  - {fileID: 11400000, guid: 459daa44544a7f24ca3e8bf0d79496d6, type: 2}
-  - {fileID: 11400000, guid: 806a51e2c124566469da2279d75ca8b2, type: 2}
-  - {fileID: 11400000, guid: afa681b6bd40db747b4349afde69c8e7, type: 2}
-  - {fileID: 11400000, guid: 8de54f46d699a0e42b9fe4dbf17d318d, type: 2}
-  - {fileID: 11400000, guid: 0ae41412e0f043840950676be876eb06, type: 2}
-  - {fileID: 11400000, guid: 590a74daeac9e024d8c4c84a9a2b1d03, type: 2}
-  - {fileID: 11400000, guid: 6165668b2c2b7124abea21491d0c7330, type: 2}
-  - {fileID: 11400000, guid: 3d2bcfd1d541665479da47c4e5ba3ec2, type: 2}
-  - {fileID: 11400000, guid: b05316286ffd03540b58e14cd5d7964c, type: 2}
-  - {fileID: 11400000, guid: 21817c11b0ec1c540998485cb4b45f5a, type: 2}
-  - {fileID: 11400000, guid: c95304606be7abb4294d9631a27d418f, type: 2}
-  - {fileID: 11400000, guid: f65ee78118c7d3242bd0ac98385b8720, type: 2}
-  - {fileID: 11400000, guid: a8f45fa1bf9dd3a4a848fc2873f7bdc8, type: 2}
-  - {fileID: 11400000, guid: 35b3e93e41caba24eb70776720dd6f27, type: 2}
-  - {fileID: 11400000, guid: 7ea2a54a6216d9e42b4f85eb7e6af376, type: 2}
-  - {fileID: 11400000, guid: be19a3b66a6b2a14abc9d8fb0246ea53, type: 2}
-  - {fileID: 11400000, guid: 2409a96a529f307428f1a940f5bffcee, type: 2}
-  - {fileID: 11400000, guid: 533ea5a81a57c75499c47d7058a25ef8, type: 2}
-  - {fileID: 11400000, guid: 259a01e440a8e6640a11c1f10ac1bdf3, type: 2}
-  - {fileID: 11400000, guid: 2b3f0e25cc2960d4f822cd0a9bae4f30, type: 2}
-  - {fileID: 11400000, guid: 34b9c848786a8b6418d765bf2bc44bc8, type: 2}
-  - {fileID: 11400000, guid: 430bf678b9bb8f54fa0b28aa52e710db, type: 2}
-  - {fileID: 11400000, guid: 45ddf48a6ba4ae84ea17cbd22d59d47a, type: 2}
-  - {fileID: 11400000, guid: 386236de001d5f84f9979e83e9b6b32a, type: 2}
-  - {fileID: 11400000, guid: 15335193ea57bee42a113aa474efefa5, type: 2}
+  draw: []
   discard: []
 --- !u!4 &36516993
 Transform:
@@ -12742,7 +12714,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battle: {fileID: 0}
   heal: {fileID: 98771792}
-  health: 25
+  health: 8
   shield: 0
   poison: 0
 --- !u!1 &1962057317
