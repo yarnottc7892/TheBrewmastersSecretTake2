@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -19,21 +20,25 @@ public class PlayerControl : MonoBehaviour
     //Reference to the inventory Manager
     public InventoryManager invManager;
 
+    public GameObject inventoryUI;
+
+    //Class to store data across scenes
+    private SaveData localPlayerData = new SaveData();
+
+    //Int to store health
+    private int health = 30;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        craftingMenu.SetActive(true);
-        invManager.LoadMaterials();
-        invManager.LoadPotions();
-        invManager.LoadMaterials();
-        craftingMenu.SetActive(false);
-        craftingMenu.SetActive(true);
-        invManager.LoadMaterials();
-        invManager.LoadPotions();
-        invManager.LoadMaterials();
-        craftingMenu.SetActive(false);
+        LoadPlayer();
+        DontDestroyOnLoad(inventoryUI);
+        //craftingMenu.SetActive(true);
+        //invManager.LoadMaterials();
+        //invManager.LoadPotions();
+        //invManager.LoadMaterials();
+        //craftingMenu.SetActive(false);
     }
 
     // Update is called once per frame
@@ -63,5 +68,38 @@ public class PlayerControl : MonoBehaviour
             craftingMenu.SetActive(!craftingMenu.activeInHierarchy);
             invManager.LoadMaterials();
         }
+
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            SavePlayerOnEnemy();
+            SceneManager.LoadScene(1);
+        }
     }
+
+    //Used to save data on an enemy encounter
+    private void SavePlayerOnEnemy()
+    {
+        localPlayerData.playerPosition = transform.position;
+        //localPlayerData.enemy = enemy;
+        localPlayerData.health = health;
+
+        GameManager.Instance.savedPlayerData = localPlayerData;
+    }
+
+    private void LoadPlayer()
+    {
+        localPlayerData = GameManager.Instance.savedPlayerData;
+
+
+        transform.position = localPlayerData.playerPosition;
+        health = localPlayerData.health;
+
+        craftingMenu.SetActive(true);
+        invManager.LoadMaterials();
+        invManager.LoadPotions();
+        invManager.LoadMaterials();
+        craftingMenu.SetActive(false);
+
+    }
+
 }
