@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Interaction : MonoBehaviour
 {
     private bool overlap = false;
-    public GameObject textBox;
+    private GameObject textBox;
     public string textString;
     private GameObject player;
     public Ingredient ingredient;
@@ -16,6 +16,7 @@ public class Interaction : MonoBehaviour
     void Start()
     {
         textString = "Obtained " + ingredient.ingredientDisplayName;
+        textBox = GameManager.Instance.textBox;
     }
 
     // Update is called once per frame

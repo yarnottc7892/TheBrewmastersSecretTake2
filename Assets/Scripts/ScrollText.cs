@@ -27,7 +27,6 @@ public class ScrollText : MonoBehaviour
         {
             if (delay <= 0.0f)
             {
-                print(counter);
                 currentText = fullText.Substring(0, counter);
                 text.text = currentText;
                 counter++;

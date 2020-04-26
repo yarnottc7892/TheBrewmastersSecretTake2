@@ -11,7 +11,7 @@ public class PlayerControl : MonoBehaviour
     //Reference to the ridgidbody2D
     private Rigidbody2D rb;
 
-    //Refernce to the crafting menu
+    //Reference to the crafting menu
     public GameObject craftingMenu;
 
     //Reference to the ingredient Manager
@@ -19,8 +19,6 @@ public class PlayerControl : MonoBehaviour
 
     //Reference to the inventory Manager
     public InventoryManager invManager;
-
-    public GameObject inventoryUI;
 
     //Class to store data across scenes
     private SaveData localPlayerData = new SaveData();
@@ -33,7 +31,6 @@ public class PlayerControl : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         LoadPlayer();
-        DontDestroyOnLoad(inventoryUI);
         //craftingMenu.SetActive(true);
         //invManager.LoadMaterials();
         //invManager.LoadPotions();
@@ -94,9 +91,11 @@ public class PlayerControl : MonoBehaviour
         transform.position = localPlayerData.playerPosition;
         health = localPlayerData.health;
 
+        craftingMenu = GameManager.Instance.canvas.transform.GetChild(0).gameObject;
+        invManager = craftingMenu.GetComponent<InventoryManager>();
+        ingManager = craftingMenu.GetComponent<IngredientManager>();
+
         craftingMenu.SetActive(true);
-        invManager.LoadMaterials();
-        invManager.LoadPotions();
         invManager.LoadMaterials();
         craftingMenu.SetActive(false);
 
