@@ -8,19 +8,25 @@ using DG.Tweening;
 
 public class BattleManager : MonoBehaviour
 {
+
+    [Header("References Needed")]
     [SerializeField] private RectTransform drawDeck;
     [SerializeField] private RectTransform discardDeck;
     [SerializeField] private CardPool pool;
     [SerializeField] private Deck deck;
     [SerializeField] private TextMeshProUGUI cardsInDraw;
     [SerializeField] private TextMeshProUGUI cardsInDiscard;
-
     [SerializeField] private RectTransform middleCardSpot;
 
+    [Header("Hand And Card Settings")]
     [SerializeField] private int handSize = 5;
-    private float distanceBetweenCards = 200f;
+    [SerializeField] private float handStartingHeight;
+    [SerializeField] private float maxHandYDeviation;
+    [SerializeField] private float maxHandRotDeviation;
+    [SerializeField] private float distanceBetweenCards = 200f;
     private List<CardController> cardsInHand = new List<CardController>();
 
+    [Header("Referenced By Other Classes")]
     public Transform player;
     public Transform enemy;
 
@@ -30,7 +36,7 @@ public class BattleManager : MonoBehaviour
     void Start() 
     {
         deck.shuffleDraw();
-        // drawHand();
+        drawHand();
         cardsInDraw.text = deck.draw.Count.ToString();
         cardsInDiscard.text = 0.ToString();
     }
@@ -38,36 +44,39 @@ public class BattleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            drawHand();
-        }
     }
 
     private void drawCard() 
     {
-        var card = CardPool.Instance.Get();
-
-        if (deck.draw.Count == 0)
+        if (deck.discard.Count == 0 && deck.draw.Count == 0)
         {
-            deck.shuffleDiscard();
-            cardsInDraw.text = deck.draw.Count.ToString();
-            cardsInDiscard.text = 0.ToString();
+            Debug.Log("Can't draw anymore cards");
         }
+        else
+        {
+            var card = CardPool.Instance.Get();
 
-        card.setData(deck.draw[deck.draw.Count - 1]);
-        deck.removeCardFromDrawAt(deck.draw.Count - 1);
-        cardsInDraw.text = deck.draw.Count.ToString();
-        card.gameObject.SetActive(true);
-        card.GetComponent<Animator>().SetTrigger("Spawn");
+            if (deck.draw.Count == 0)
+            {
+                deck.shuffleDiscard();
+                cardsInDraw.text = deck.draw.Count.ToString();
+                cardsInDiscard.text = 0.ToString();
+            }
 
-        cardsInHand.Add(card);
+            card.setData(deck.draw[deck.draw.Count - 1]);
+            deck.removeCardFromDrawAt(deck.draw.Count - 1);
+            cardsInDraw.text = deck.draw.Count.ToString();
+            card.gameObject.SetActive(true);
 
-        RectTransform cardRect = card.GetComponent<RectTransform>();
-        cardRect.anchoredPosition = drawDeck.anchoredPosition;
+            cardsInHand.Add(card);
 
-        generateCardPositions();
+            RectTransform cardRect = card.GetComponent<RectTransform>();
+            cardRect.anchoredPosition = drawDeck.anchoredPosition;
+            cardRect.localRotation = new Quaternion(0f, 0f, 100f, cardRect.rotation.w);
+            cardRect.DOScale(Vector3.one, 0.5f);
 
+            generateCardPositions();
+        }
     }
 
     private void drawHand() 
@@ -86,20 +95,40 @@ public class BattleManager : MonoBehaviour
         if (cardsInHand.Count % 2 == 0)
         {
             distanceFromMiddle = distanceBetweenCards / 2;
-            firstCardXPos = middleCardSpot.anchoredPosition.x - distanceFromMiddle - (distanceBetweenCards * ((cardsInHand.Count / 2) - 1));
+            firstCardXPos = middleCardSpot.anchoredPosition.x + distanceFromMiddle + (distanceBetweenCards * ((cardsInHand.Count / 2) - 1));
         } 
         else
         {
-            firstCardXPos = middleCardSpot.anchoredPosition.x - distanceFromMiddle - (distanceBetweenCards * (cardsInHand.Count / 2));
+            firstCardXPos = middleCardSpot.anchoredPosition.x + distanceFromMiddle + (distanceBetweenCards * (cardsInHand.Count / 2));
         }
 
         for (int i = 0; i < cardsInHand.Count; i++)
         {
             RectTransform cardRect = cardsInHand[i].GetComponent<RectTransform>();
 
-            float newXPos = firstCardXPos + (distanceBetweenCards * i);
-            Vector2 newPos = new Vector2(newXPos, cardRect.anchoredPosition.y);
+            float newXPos = firstCardXPos - (distanceBetweenCards * i);
+
+            float newYPos = handStartingHeight;
+            float newRotation = 0f;
+
+
+            if (cardsInHand.Count % 2 == 0)
+            {
+
+            }
+            if ((cardsInHand.Count / 2) > 0)
+            {
+                float distanceFromCenterWeight = (float)((cardsInHand.Count / 2) - i) / (cardsInHand.Count / 2);
+                newYPos -= (Mathf.Abs(distanceFromCenterWeight) * maxHandYDeviation);
+                newRotation = (-1 * distanceFromCenterWeight) * maxHandRotDeviation;
+            }
+
+            Vector2 newPos = new Vector2(newXPos, newYPos);
+            Vector3 newRot = new Vector3(0f, 0f, newRotation);
+
             cardRect.DOAnchorPos(newPos, 0.5f).OnComplete(setCardPositions);
+            cardRect.DORotate(newRot, 0.5f);
+            cardsInHand[i].startRot = newRot;
 
         }
     }

@@ -57,6 +57,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: {fileID: 4467484653192339839}
   description: {fileID: 4467484652957635854}
+  hoveredHeight: -290
   discardPile: {fileID: 0}
   playSpot: {fileID: 0}
   battle: {fileID: 0}
@@ -65,6 +66,7 @@ MonoBehaviour:
   startPos: {x: -700, y: -300, z: 0}
   rectTransform: {fileID: 0}
   targeting: 0
+  playSelfTargetedCard: 0
 --- !u!222 &4467484652022103513
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -121,7 +123,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4467484652022103493}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 2c857e06442684b45ab564b58c26c69f, type: 2}
   m_CullingMode: 0
