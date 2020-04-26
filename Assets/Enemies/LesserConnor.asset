@@ -13,11 +13,7 @@ MonoBehaviour:
   m_Name: LesserConnor
   m_EditorClassIdentifier: 
   name: Lesser Connor
-  maxHealth: 500
+  maxHealth: 10000
   art: {fileID: 21300000, guid: 8fa8332b0ae9b5c43b60f7055880e0cb, type: 3}
   actions:
-  - {fileID: 11400000, guid: 82ffb1f56945a3542ac9e8e017954438, type: 2}
-  - {fileID: 11400000, guid: ee78138ec4d90aa479c256d6b210413e, type: 2}
-  - {fileID: 11400000, guid: 8250bb021c2302045b5b734d75cb3c54, type: 2}
-  - {fileID: 11400000, guid: 8df2dfec0c58f0a4b942a584553a290c, type: 2}
-  - {fileID: 11400000, guid: 9af4161b3bb8c7641953d6d794600308, type: 2}
+  - {fileID: 11400000, guid: 83e2e35420fe17e4e9b6edae40cc3ee8, type: 2}
