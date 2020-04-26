@@ -11,6 +11,7 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
     // Card elements to be set
     [SerializeField] private TextMeshProUGUI cost;
     [SerializeField] private TextMeshProUGUI description;
+    [SerializeField] private float hoveredHeight;
 
     // Places the card needs to go
     public RectTransform discardPile;
@@ -21,10 +22,8 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
     public BattleManager battle;
     public Canvas canvas;
     private CanvasGroup canvasGroup;
-    private Animator anim;
-    private bool selected = false;
-    private bool interactable = true;
-    private bool mouseOver = false;
+    private enum CardState { Normal, Hovered, Selected, Played }
+    private CardState currentState = CardState.Normal;
     
 
     // Order in the sibling list
@@ -33,6 +32,7 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
     // Things that need to be accessed by other classes
     public Card_Base data;
     public Vector3 startPos;
+    public Vector3 startRot;
     public RectTransform rectTransform;
     public bool targeting = false;
     public bool playSelfTargetedCard = false;
@@ -41,9 +41,12 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-        canvasGroup = GetComponent<CanvasGroup>();
         
-        anim = GetComponent<Animator>();
+        canvasGroup = GetComponent<CanvasGroup>();
+    }
+
+    private void Awake() {
+        
     }
 
     public void setData(Card_Base newData) 
@@ -56,33 +59,31 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
     // Check what to do when the mouse button is lifted
     public void OnPointerUp(PointerEventData eventData) 
     {
-        selected = false;
-        anim.SetBool("HoveredOver", false);
         if (!data.checkSelfTargeting())
         {
             if (!targeting)
             {
-                rectTransform.DOAnchorPos(startPos, 0.1f).OnComplete(() => setInteractable(true));
-                transform.SetSiblingIndex(sibOrder);
+                rectTransform.DOAnchorPos(startPos, 0.1f).OnComplete(() => changeState(CardState.Normal));
+                noLongerHover();
 
-            } 
+            }
             else
             {
                 data.Play(battle.player, battle.enemy);
                 discard();
             }
-        }    
+        }
         else
         {
             if (playSelfTargetedCard)
             {
                 data.Play(battle.player, battle.enemy);
                 discard();
-            } 
+            }
             else
             {
-                rectTransform.DOAnchorPos(startPos, 0.1f).OnComplete(() => setInteractable(true));
-                transform.SetSiblingIndex(sibOrder);
+                rectTransform.DOAnchorPos(startPos, 0.1f).OnComplete(() => changeState(CardState.Normal));
+                noLongerHover();
 
             }
         }
@@ -91,67 +92,83 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
         battle.currentCard = null;
         
     }
+
     // Card is clicked on
     public void OnPointerDown(PointerEventData eventData) 
     {
-        sibOrder = transform.GetSiblingIndex();
-        transform.SetAsLastSibling();
-        rectTransform.DOAnchorPos(playSpot.anchoredPosition, 0.05f).OnComplete(() => setInteractable(false));
-        anim.SetBool("HoveredOver", true);
+        changeState(CardState.Selected);
+        rectTransform.DOAnchorPos(playSpot.anchoredPosition, 0.05f);
         battle.currentCard = this;
-        selected = true;
     }
 
     // Card is hovered over
     public void OnPointerEnter(PointerEventData eventData) 
     {
-        mouseOver = true;
-
-        if (!selected && interactable)
+        if (currentState != CardState.Selected && currentState != CardState.Played)
         {
-            setInteractable(true);
+            hover();
         } 
     }
 
     // Card not hovered over
     public void OnPointerExit(PointerEventData eventData) 
     {
-        mouseOver = false;
 
-        if (!selected)
+        if (currentState == CardState.Hovered)
         {
-            anim.SetBool("HoveredOver", false);
-            transform.SetSiblingIndex(sibOrder);
-            rectTransform.DOAnchorPos(startPos, 0.1f).OnComplete(() => setInteractable(true));
+            noLongerHover();
         }
     }
 
     public void discard() {
 
-        GetComponent<Animator>().SetTrigger("Discard");
-
         targeting = false;
 
-        interactable = true;
+        playSelfTargetedCard = false;
 
         battle.removeCard(this);
 
-        Vector3 start = rectTransform.anchoredPosition;
-
-        rectTransform.DOAnchorPos(discardPile.anchoredPosition, 0.5f).OnComplete(() => CardPool.Instance.ReturnToPool(this));
+        rectTransform.DOAnchorPos(discardPile.anchoredPosition, 0.5f).OnComplete(() => changeState(CardState.Played));
+        rectTransform.DORotate(new Vector3(0, 0, 180), 0.5f);
+        rectTransform.DOScale(Vector3.zero, 0.5f);
     }
 
-    private void setInteractable(bool interact) 
+    private void hover() 
     {
-        interactable = interact;
+        sibOrder = transform.GetSiblingIndex();
+        transform.SetAsLastSibling();
+        DOTween.Kill(this.rectTransform);
+        rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, hoveredHeight);
+        rectTransform.localScale = Vector3.one * 1.5f;
+        rectTransform.rotation = new Quaternion(0f, 0f, 0f, rectTransform.rotation.w);
+        changeState(CardState.Hovered);
+    }
 
-        if (interactable == true && mouseOver)
+    private void noLongerHover() 
+    {
+        transform.SetSiblingIndex(sibOrder);
+        rectTransform.DOAnchorPos(startPos, 0.3f).OnComplete(() => changeState(CardState.Normal));
+        rectTransform.DOScale(Vector3.one, 0.3f);
+        rectTransform.DORotate(startRot, 0.3f);
+    }
+
+    private void changeState(CardState newState) 
+    {
+        currentState = newState;
+
+        if (currentState == CardState.Normal)
         {
-            sibOrder = transform.GetSiblingIndex();
-            transform.SetAsLastSibling();
-            anim.SetBool("HoveredOver", true);
-            rectTransform.DOAnchorPos(rectTransform.anchoredPosition + new Vector2(0, 125), 0.1f);
-            interactable = false;
+            canvasGroup.blocksRaycasts = true;
+        }
+        else if (currentState == CardState.Selected)
+        {
+            canvasGroup.blocksRaycasts = false;
+        }
+        else if (currentState == CardState.Played)
+        {
+            canvasGroup.blocksRaycasts = true;
+            currentState = CardState.Normal;
+            CardPool.Instance.ReturnToPool(this);
         }
     }
 }

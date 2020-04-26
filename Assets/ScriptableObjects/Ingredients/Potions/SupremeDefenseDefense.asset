@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 100cf915951be6f4db455667d5535f38, type: 3}
+  m_Name: SupremeDefenseDefense
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
+  ingredientID: DefenseBottleDefenseRootNormalBottleDefenseRoot
+  ingredientDisplayName: Supreme Defense-D
+  ingredientDesc: Defense-D of Supreme
+  invAmount: -1
