@@ -28,6 +28,7 @@ public class PlayerControl : MonoBehaviour
     //Int to store health
     private int health = 30;
 
+    bool firstRun = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,15 +36,24 @@ public class PlayerControl : MonoBehaviour
         LoadPlayer();
         DontDestroyOnLoad(inventoryUI);
         //craftingMenu.SetActive(true);
-        //invManager.LoadMaterials();
-        //invManager.LoadPotions();
-        //invManager.LoadMaterials();
-        //craftingMenu.SetActive(false);
+        
     }
+
+    
 
     // Update is called once per frame
     void Update()
     {
+        if (firstRun)
+        {
+            craftingMenu.SetActive(true);
+            invManager.LoadMaterials();
+            invManager.LoadPotions();
+            invManager.LoadMaterials();
+            craftingMenu.SetActive(false);
+            firstRun = false;
+        }
+
         if (!craftingMenu.activeInHierarchy)
         {
             float moveHori = Input.GetAxis("Horizontal");

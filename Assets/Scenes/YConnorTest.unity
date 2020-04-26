@@ -285,6 +285,7 @@ MonoBehaviour:
   craftingMenu: {fileID: 700387939}
   ingManager: {fileID: 700387942}
   invManager: {fileID: 700387941}
+  inventoryUI: {fileID: 0}
 --- !u!212 &892494379
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -987,6 +988,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: InventoryUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078052475197408565, guid: 363456073ceda9a4e947cb9c4a17818f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 363456073ceda9a4e947cb9c4a17818f, type: 3}
