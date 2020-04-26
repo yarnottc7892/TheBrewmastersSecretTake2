@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public class SaveData
+{
+    public Vector2 playerPosition = Vector2.zero;
+    public int health = 30;
+    public List<Card_Base> deck = new List<Card_Base>();
+    public Enemy_Base enemy = null;
+}
+
 public class GameManager : MonoBehaviour
 {
     public static bool textBoxOn = false;
 
 
-    public static GameManager Instance;
+    public static GameManager Instance { get; private set; }
+
+    public SaveData savedPlayerData;
 
     void Awake()
     {
@@ -15,6 +26,7 @@ public class GameManager : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
             Instance = this;
+            savedPlayerData = new SaveData();
         }
         else if (Instance != this)
         {
@@ -35,10 +47,4 @@ public class GameManager : MonoBehaviour
     }
 }
 
-public class SaveData : MonoBehaviour
-{
-    public Vector2 playerPosition;
-    public int health;
-    //public 
-}
 

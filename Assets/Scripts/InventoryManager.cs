@@ -37,7 +37,7 @@ public class InventoryManager : MonoBehaviour
 
         }
         //Debug.Log(invDragDrop.Count);
-        Debug.Log(invSlot[0].rT);
+        //Debug.Log(invSlot[0].rT);
         for(int i=0; i<invSlot.Count; i++)
         {
             var iMDD = invMaterialDragDrop[i].GetComponent<InventoryDragDrop>();
@@ -72,9 +72,9 @@ public class InventoryManager : MonoBehaviour
     public void LoadMaterials()
     {
         isOnMatTab = true;
-        Debug.Log("LOADMATS");
+        //Debug.Log("LOADMATS");
         int i = 0;
-        Debug.Log("MaterialList COunt in inv manager " + ingredientManager.materialList.Count);
+        //Debug.Log("MaterialList COunt in inv manager " + ingredientManager.materialList.Count);
         foreach (KeyValuePair<string, Ingredient> entry in ingredientManager.materialList)
         {
             invMaterialDragDrop[i].SetActive(true);
@@ -84,7 +84,7 @@ public class InventoryManager : MonoBehaviour
             i++;
         }
 
-        print("MATS LOADED: " + i);
+        //print("MATS LOADED: " + i);
 
         for(int j = i; j < invSlot.Count; j++)
         {
@@ -113,7 +113,7 @@ public class InventoryManager : MonoBehaviour
     public void LoadPotions()
     {
         isOnMatTab = false;
-        Debug.Log("LOADPOTS");
+        //Debug.Log("LOADPOTS");
         int i = 0;
 
         foreach (KeyValuePair<string, Ingredient> entry in ingredientManager.potionList)
