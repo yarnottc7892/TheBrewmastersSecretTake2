@@ -8,6 +8,8 @@ public class PlayerControl : MonoBehaviour
     //Float used to adjust player speed
     [SerializeField] private float speed;
 
+    private Animator anim;
+
     //Reference to the ridgidbody2D
     private Rigidbody2D rb;
 
@@ -33,6 +35,8 @@ public class PlayerControl : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         LoadPlayer();
         //craftingMenu.SetActive(true);
+
+        anim = GetComponent<Animator>();
         
     }
 
@@ -55,6 +59,26 @@ public class PlayerControl : MonoBehaviour
         {
             float moveHori = Input.GetAxis("Horizontal");
             float moveVert = Input.GetAxis("Vertical");
+
+            if (moveHori > 0)
+            {
+                anim.SetTrigger("WalkRight");
+            }
+            else if (moveHori < 0)
+            {
+                anim.SetTrigger("WalkLeft");
+            }
+            else if (moveVert > 0)
+            {
+                anim.SetTrigger("WalkBackwards");
+            }
+            else if(moveVert < 0)
+            {
+                anim.SetTrigger("WalkForwards");
+            } else
+            {
+                anim.SetTrigger("IdleForward");
+            }
 
             if (!GameManager.textBoxOn)
             {
