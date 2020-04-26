@@ -7,7 +7,7 @@ public class Damage : Effect_Base
 {
     public override void DoEffect(Transform target) {
 
-        target.GetComponent<EnemyController>().TakeDamage(effectValue);
+        target.GetComponent<Combatant_Base>().TakeDamage(effectValue);
 
     }
 
@@ -19,7 +19,7 @@ public class Damage : Effect_Base
         }
         else
         {
-            return "Deal " + effectValue + "damage to an enemy.";
+            return "Deal " + effectValue + " damage to an enemy.";
         }
 
         

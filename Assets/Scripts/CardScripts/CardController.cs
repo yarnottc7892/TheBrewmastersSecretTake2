@@ -94,7 +94,7 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
     }
 
     // Card is clicked on
-    public void OnPointerDown(PointerEventData eventData) 
+    public void OnPointerDown(PointerEventData eventData)
     {
         changeState(CardState.Selected);
         rectTransform.DOAnchorPos(playSpot.anchoredPosition, 0.05f);

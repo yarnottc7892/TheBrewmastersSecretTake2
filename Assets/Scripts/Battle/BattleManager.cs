@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,10 @@ using DG.Tweening;
 
 public class BattleManager : MonoBehaviour
 {
+
+    public enum BattleState { Start, EnemyTurn, PlayerTurn, Win, Lose }
+    private BattleState state = BattleState.Start;
+    private int round = 0;
 
     [Header("References Needed")]
     [SerializeField] private RectTransform drawDeck;
@@ -35,15 +40,13 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start() 
     {
-        deck.shuffleDraw();
-        drawHand();
-        cardsInDraw.text = deck.draw.Count.ToString();
-        cardsInDiscard.text = 0.ToString();
-    }
+        if (state == BattleState.Start)
+        {
+            deck.shuffleDraw();
+            state = BattleState.PlayerTurn;
 
-    // Update is called once per frame
-    void Update()
-    {
+            playerTurn();
+        }
     }
 
     private void drawCard() 
@@ -148,5 +151,43 @@ public class BattleManager : MonoBehaviour
         deck.addCardToDiscard(card.data);
         cardsInDiscard.text = deck.discard.Count.ToString();
         generateCardPositions();
+    }
+
+    private void playerTurn() 
+    {
+        PlayerController playerScript = player.GetComponent<PlayerController>();
+
+        round++;
+
+        playerScript.startTurn();
+
+        drawHand();
+        cardsInDraw.text = deck.draw.Count.ToString();
+        cardsInDiscard.text = 0.ToString();
+        
+
+        foreach (CardController card in cardsInHand)
+        {
+            card.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        }
+    }
+
+    private void enemyTurn() 
+    {
+        EnemyController enemyScript = enemy.GetComponent<EnemyController>();
+
+        round++;
+
+        enemyScript.startTurn();
+    }
+
+    public void endTurn() 
+    {
+        for(int i = cardsInHand.Count - 1; i >= 0; i--)
+        {
+            cardsInHand[i].discard();
+        }
+
+        enemyTurn();
     }
 }
