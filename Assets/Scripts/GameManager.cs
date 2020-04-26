@@ -6,6 +6,22 @@ public class GameManager : MonoBehaviour
 {
     public static bool textBoxOn = false;
 
+
+    public static GameManager Instance;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,3 +34,11 @@ public class GameManager : MonoBehaviour
         
     }
 }
+
+public class SaveData : MonoBehaviour
+{
+    public Vector2 playerPosition;
+    public int health;
+    //public 
+}
+
