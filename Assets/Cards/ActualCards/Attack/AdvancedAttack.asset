@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1cdf1dd27c233f340ab5649ea40bb144, type: 3}
-  m_Name: BasicDamage
+  m_Name: AdvancedAttack
   m_EditorClassIdentifier: 
+  name: Advanced Attack
   cost: 1
   art: {fileID: 0}
   description: 
   effects:
-  - {fileID: 11400000, guid: 9af4161b3bb8c7641953d6d794600308, type: 2}
+  - {fileID: 11400000, guid: ee78138ec4d90aa479c256d6b210413e, type: 2}

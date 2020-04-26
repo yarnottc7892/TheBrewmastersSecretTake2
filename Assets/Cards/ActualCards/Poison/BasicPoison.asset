@@ -9,8 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1173095a92fea1944b547f7bd7771246, type: 3}
-  m_Name: Heal3
+  m_Script: {fileID: 11500000, guid: 1cdf1dd27c233f340ab5649ea40bb144, type: 3}
+  m_Name: BasicPoison
   m_EditorClassIdentifier: 
-  effectValue: 3
-  targetPlayer: 1
+  name: Basic Heal
+  cost: 0
+  art: {fileID: 0}
+  description: 
+  effects:
+  - {fileID: 11400000, guid: 8811a93309b2b3b4482f14b843060ccd, type: 2}

@@ -2,25 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
 using DG.Tweening;
 
 public class EnemyController : Combatant_Base, IDropHandler
 {
-    [SerializeField] BattleManager battle;
+    public Enemy_Base data;
+    [SerializeField] private TextMeshProUGUI nameText;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public int decidedAction;
+
+    private void Start() {
+
+        maxHealth = data.maxHealth;
+        health = maxHealth;
+        nameText.text = data.name;
+        GetComponent<SpriteRenderer>().sprite = data.art;
+        OnSetup?.Invoke(maxHealth);
     }
-
-    // Update is called once per frame
-    void Update()
+    public void OnDrop(PointerEventData eventData) 
     {
-        
-    }
-
-    public void OnDrop(PointerEventData eventData) {
 
         CardController card = eventData.pointerDrag.GetComponent<CardController>();
         card.data.Play(transform, transform);
@@ -31,12 +32,16 @@ public class EnemyController : Combatant_Base, IDropHandler
     { 
         if (battle.currentCard != null)
         {
-            battle.currentCard.targeting = true;
-            transform.localScale = transform.localScale * 1.1f;
+            if (!battle.currentCard.data.checkSelfTargeting())
+            {
+                battle.currentCard.targeting = true;
+                transform.localScale = transform.localScale * 1.1f;
+            }    
         }  
     }
 
-    private void OnMouseExit() {
+    private void OnMouseExit() 
+    {
 
         if (battle.currentCard != null)
         {
@@ -44,5 +49,39 @@ public class EnemyController : Combatant_Base, IDropHandler
         }
 
         transform.localScale = Vector3.one * 0.5f;
+    }
+
+    public void TakeTurn() 
+    {
+
+
+    }
+
+    public void decideTurn() 
+    {
+        decidedAction = Random.Range(0, 1000) % data.actions.Count;
+        Debug.Log("Decided Action:" + decidedAction);
+    }
+
+    public IEnumerator takeTurn() 
+    {
+        startTurn();
+
+        yield return new WaitForSeconds(0.5f);
+
+        Transform target;
+        if (data.actions[decidedAction].targetPlayer)
+        {
+            target = battle.enemy;
+        } 
+        else
+        {
+            target = battle.player;
+        }
+        data.actions[decidedAction].DoEffect(target);
+
+        yield return new WaitForSeconds(0.5f);
+
+        battle.playerTurn();
     }
 }

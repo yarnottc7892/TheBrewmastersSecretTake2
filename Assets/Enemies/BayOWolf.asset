@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c14f7c24865390d40aa024e1523a0a9f, type: 3}
+  m_Name: BayOWolf
+  m_EditorClassIdentifier: 
+  name: Bay O' Wolf
+  maxHealth: 50
+  art: {fileID: 21300000, guid: 69404b08bb116ed4c88c49cbd494f037, type: 3}
+  actions:
+  - {fileID: 11400000, guid: 9af4161b3bb8c7641953d6d794600308, type: 2}
+  - {fileID: 11400000, guid: d4e38fca934bd6749a418afb40335dcf, type: 2}
+  - {fileID: 11400000, guid: 8f305e7c032bff94e9e1eab643a296d1, type: 2}
+  - {fileID: 11400000, guid: 8811a93309b2b3b4482f14b843060ccd, type: 2}

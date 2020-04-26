@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1cdf1dd27c233f340ab5649ea40bb144, type: 3}
-  m_Name: SuperHealing
+  m_Name: UltraHeal
   m_EditorClassIdentifier: 
-  cost: 3
+  name: Ultra Heal
+  cost: 4
   art: {fileID: 0}
-  description: 'Heal 10 health
-
-'
+  description: 
   effects:
   - {fileID: 11400000, guid: 8df2dfec0c58f0a4b942a584553a290c, type: 2}
