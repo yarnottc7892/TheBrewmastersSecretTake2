@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100cf915951be6f4db455667d5535f38, type: 3}
   m_Name: AdvancedAttack
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: -7281422933954074221, guid: aa54223d3d586d14b998e86c2d64d39b, type: 3}
   ingredientID: AttackBottleAttackFlower
   ingredientDisplayName: Advanced Attack
   ingredientDesc: Attack of Basic

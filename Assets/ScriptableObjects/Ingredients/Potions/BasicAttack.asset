@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100cf915951be6f4db455667d5535f38, type: 3}
   m_Name: BasicAttack
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 4c1808a2c3f00de42b45cd16387b6e89, type: 3}
   ingredientID: NormalBottleAttackFlower
   ingredientDisplayName: Basic Attack
   ingredientDesc: Attack of Basic

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100cf915951be6f4db455667d5535f38, type: 3}
   m_Name: AdvancedHeal
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: -300653620056081293, guid: 4ee95b498b4a4e44a867e3c80915b4c5, type: 3}
   ingredientID: HealBottleHealHerb
   ingredientDisplayName: Advanced Heal
   ingredientDesc: Heal of Advanced

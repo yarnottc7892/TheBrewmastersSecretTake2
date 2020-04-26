@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100cf915951be6f4db455667d5535f38, type: 3}
   m_Name: BasicDefense
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 6c151c23ad780104fa52ab75d79a5d93, type: 3}
   ingredientID: NormalBottleDefenseRoot
   ingredientDisplayName: Basic Defense
   ingredientDesc: Defense of Basic

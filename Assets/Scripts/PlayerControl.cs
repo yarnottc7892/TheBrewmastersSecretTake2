@@ -24,6 +24,15 @@ public class PlayerControl : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
+        craftingMenu.SetActive(true);
+        invManager.LoadMaterials();
+        invManager.LoadPotions();
+        invManager.LoadMaterials();
+        craftingMenu.SetActive(false);
+        craftingMenu.SetActive(true);
+        invManager.LoadMaterials();
+        invManager.LoadPotions();
+        invManager.LoadMaterials();
         craftingMenu.SetActive(false);
     }
 

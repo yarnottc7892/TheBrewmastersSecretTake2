@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100cf915951be6f4db455667d5535f38, type: 3}
   m_Name: PoisonMushroom
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
+  sprite: {fileID: -1863167573710400701, guid: 2da1ebf19c7144d428ee2910da5f033e, type: 3}
   ingredientID: PoisonMushroom
   ingredientDisplayName: Poison Mushroom
   ingredientDesc: Mushroom of Poison

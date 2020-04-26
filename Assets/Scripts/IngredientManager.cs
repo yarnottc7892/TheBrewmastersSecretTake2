@@ -69,6 +69,7 @@ public class IngredientManager : MonoBehaviour
         {
             if(potionList.ContainsKey(ingredientID1 + ingredientID2))
             {
+                print("COMBO12");
                 AddIngredient(ingredientID1 + ingredientID2);
                 RemoveIngredient(ingredientID1);
                 RemoveIngredient(ingredientID2);
@@ -76,6 +77,7 @@ public class IngredientManager : MonoBehaviour
             }
             else if(potionList.ContainsKey(ingredientID2 + ingredientID1))
             {
+                print("COMBO21");
                 AddIngredient(ingredientID2 + ingredientID1);
                 RemoveIngredient(ingredientID1);
                 RemoveIngredient(ingredientID2);
@@ -100,12 +102,12 @@ public class IngredientManager : MonoBehaviour
         {
             if (potionList.ContainsKey(ingredientID1 + ingredientID2))
             {
-                print("COMBO12");
+                
                 return ingredientID1 + ingredientID2;
             }
             else if (potionList.ContainsKey(ingredientID2 + ingredientID1))
             {
-                print("COMBO21");
+                
                 return ingredientID2 + ingredientID1;
             }
             else
@@ -114,6 +116,7 @@ public class IngredientManager : MonoBehaviour
             }
 
         }
+        print("" + materialList.ContainsKey(ingredientID1) + materialList.ContainsKey(ingredientID2) + (materialList[ingredientID1].invAmount > 0) + materialList[ingredientID1].invAmount + (materialList[ingredientID2].invAmount > 0) + materialList[ingredientID2].invAmount);
         return "";
     }
 
