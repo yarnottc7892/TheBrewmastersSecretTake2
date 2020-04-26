@@ -15,6 +15,7 @@ public class BattleManager : MonoBehaviour
     private int round = 0;
     public int energyPerTurn;
     public int currentEnergy;
+    private bool battling;
 
     [Header("References Needed")]
     [SerializeField] private RectTransform drawDeck;
@@ -45,10 +46,33 @@ public class BattleManager : MonoBehaviour
     {
         if (state == BattleState.Start)
         {
+            battling = true;
             deck.shuffleDraw();
             state = BattleState.PlayerTurn;
 
             playerTurn();
+        }
+    }
+
+    private void LateUpdate() {
+        Combatant_Base playerScript = player.GetComponent<Combatant_Base>();
+        Combatant_Base enemyScript = enemy.GetComponent<Combatant_Base>();
+
+        if (playerScript.health <= 0 && battling)
+        {
+            playerScript.enabled = false;
+            enemyScript.enabled = false;
+            endTurn();
+            Debug.Log("Player Loses :/");
+            battling = false;
+        }
+        else if(enemyScript.health <= 0 && battling)
+        {
+            playerScript.enabled = false;
+            enemyScript.enabled = false;
+            endTurn();
+            Debug.Log("Player Wins :/");
+            battling = false;
         }
     }
 
@@ -166,16 +190,13 @@ public class BattleManager : MonoBehaviour
         PlayerController playerScript = player.GetComponent<PlayerController>();
         EnemyController enemyScript = enemy.GetComponent<EnemyController>();
 
-        if(playerScript.health <= 0)
-        {
-            playerWin();
-            return;
-        }
-        else if(enemyScript.health <= 0)
-        {
-            playerLose();
-            return;
-        }
+        Debug.Log(playerScript.health);
+
+        //if(playerScript.health <= 0)
+        //{
+        //    playerLose();
+        //    return;
+        //}
         enemyScript.GetComponent<EnemyController>().decideTurn();
 
 

@@ -28,6 +28,7 @@ public class CombatantUIManager : MonoBehaviour
     private void Setup(int maxHealth) 
     {
         healthbar.maxValue = maxHealth;
+        healthbar.value = maxHealth;
         string healthFraction = maxHealth + "/" + maxHealth;
         healthText.text = healthFraction;
     }
