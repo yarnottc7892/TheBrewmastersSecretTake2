@@ -24,7 +24,7 @@ public class Combatant_Base : MonoBehaviour
 
     private void Start() 
     {
-        maxHealth = health;
+        maxHealth = 30;
         OnSetup?.Invoke(maxHealth);
     }
 
