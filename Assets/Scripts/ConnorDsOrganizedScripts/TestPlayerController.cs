@@ -9,8 +9,6 @@ public class TestPlayerController : MonoBehaviour
     private Animator anim;
     private Rigidbody2D rb;
 
-    private string idle = "IdleForward";
-
     // Start is called before the first frame update
     void Start()
     {
@@ -24,39 +22,35 @@ public class TestPlayerController : MonoBehaviour
         float horiz = Input.GetAxis("Horizontal");
         float vert = Input.GetAxis("Vertical");
 
-        if (horiz != 0)
+        if (Input.GetButtonDown("Horizontal"))
         {
             rb.velocity = Vector3.right * horiz * speed;
 
-            if (horiz > 0 && idle != "IdleRight")
+            if (horiz > 0)
             {
                 anim.SetTrigger("WalkRight");
-                idle = "IdleRight";
             } 
-            else if (horiz < 0 && idle != "IdleLeft")
+            else if (horiz < 0)
             {
                 anim.SetTrigger("WalkLeft");
-                idle = "IdleLeft";
             }
         }
-        else if (vert != 0)
+        else if (Input.GetButtonDown("Vertical"))
         {
             rb.velocity = Vector3.up * vert * speed;
 
-            if (vert > 0 && idle != "IdleBackwards")
+            if (vert > 0)
             {
                 anim.SetTrigger("WalkBackwards");
-                idle = "IdleBackwards";
             } 
-            else if (vert < 0 && idle != "IdleForward")
+            else if (vert < 0)
             {
                 anim.SetTrigger("WalkForward");
-                idle = "IdleForward";
             }
         } 
-        else
+        else if (Input.GetButtonUp("Horizontal") || Input.GetButtonUp("Vertical"))
         {
-            anim.SetTrigger(idle);
+            anim.SetTrigger("Idle");
             rb.velocity = Vector3.zero;
         }
     }
