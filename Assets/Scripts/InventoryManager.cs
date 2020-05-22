@@ -207,7 +207,9 @@ public class InventoryManager : MonoBehaviour
             }
             ingredientManager.CombineIngredients(craftIngredient1.ingredientID, craftIngredient2.ingredientID);
             //create product drag drop
+            LoadMaterials();
             LoadPotions();
+            
             print("potion index " + craftIndex);
             //invPotionDragDrop[craftIndex].SetActive(true);
             //invPotionDragDrop[craftIndex].GetComponent<InventoryDragDrop>().rT.anchoredPosition = productSlot.rT.anchoredPosition;

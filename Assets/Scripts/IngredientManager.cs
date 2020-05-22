@@ -13,6 +13,28 @@ public class IngredientManager : MonoBehaviour
 
     }
 
+    public void ResetAll()
+    {
+        foreach (KeyValuePair<string, Ingredient> pair in materialList)
+        {
+            pair.Value.invAmount = -1;
+        }
+
+        foreach (KeyValuePair<string, Ingredient> pair in potionList)
+        {
+            pair.Value.invAmount = -1;
+        }
+    }
+
+    private void Update()
+    {
+
+        foreach (KeyValuePair<string, Ingredient> pair in materialList)
+        {
+            print("" + pair + pair.Value.invAmount);
+        }
+    }
+
     public void LoadIngredients()
     {
         for (int i = 0; i < mList.Count; i++)
@@ -61,7 +83,7 @@ public class IngredientManager : MonoBehaviour
         {
             materialList[ingredientID].invAmount--;
         }
-        
+        //LoadIngredients();
     }
 
     public string CombineIngredients(string ingredientID1, string ingredientID2)
@@ -123,11 +145,5 @@ public class IngredientManager : MonoBehaviour
         }
         print("" + materialList.ContainsKey(ingredientID1) + materialList.ContainsKey(ingredientID2) + (materialList[ingredientID1].invAmount > 0) + materialList[ingredientID1].invAmount + (materialList[ingredientID2].invAmount > 0) + materialList[ingredientID2].invAmount);
         return "";
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

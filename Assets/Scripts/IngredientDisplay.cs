@@ -24,7 +24,7 @@ public class IngredientDisplay : MonoBehaviour
         else if(firstRun && ingredient != null)
         {
             print("set to -1");
-            ingredient.invAmount = -1;
+            //ingredient.invAmount = -1;
             firstRun = false;
         }
 

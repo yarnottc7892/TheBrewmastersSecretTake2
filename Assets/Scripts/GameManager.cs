@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
             Instance.textBox.transform.SetParent(Instance.canvas.transform);
             textBox.SetActive(false);
 
+            canvas.transform.GetChild(0).gameObject.GetComponent<IngredientManager>().ResetAll();
+
             DontDestroyOnLoad(canvas);
             //DontDestroyOnLoad(craftingUI);
             //DontDestroyOnLoad(textBox);

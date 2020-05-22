@@ -125,9 +125,10 @@ public class PlayerControl : MonoBehaviour
         transform.position = localPlayerData.playerPosition;
         health = localPlayerData.health;
 
-        craftingMenu = GameManager.Instance.canvas.transform.GetChild(0).gameObject;
-        invManager = craftingMenu.GetComponent<InventoryManager>();
-        ingManager = craftingMenu.GetComponent<IngredientManager>();
+        GameObject temp = GameManager.Instance.canvas.transform.GetChild(0).gameObject;
+        craftingMenu = temp.transform.GetChild(0).gameObject;
+        invManager = temp.GetComponent<InventoryManager>();
+        ingManager = temp.GetComponent<IngredientManager>();
 
         craftingMenu.SetActive(true);
         invManager.LoadMaterials();
