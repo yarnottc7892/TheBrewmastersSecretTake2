@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 using DG.Tweening;
 
@@ -16,6 +17,7 @@ public class BattleManager : MonoBehaviour
     public int energyPerTurn;
     public int currentEnergy;
     private bool battling;
+    private SaveData localData = new SaveData();
 
     [Header("References Needed")]
     [SerializeField] private RectTransform drawDeck;
@@ -46,6 +48,7 @@ public class BattleManager : MonoBehaviour
     {
         if (state == BattleState.Start)
         {
+            // deck.draw = GameManager.Instance.deck;
             battling = true;
             deck.shuffleDraw();
             state = BattleState.PlayerTurn;
@@ -65,6 +68,8 @@ public class BattleManager : MonoBehaviour
             endTurn();
             Debug.Log("Player Loses :/");
             battling = false;
+            //GameManager.Instance.savedPlayerData.health = playerScript.health;
+            //SceneManager.LoadScene(0);
         }
         else if(enemyScript.health <= 0 && battling)
         {
@@ -73,6 +78,9 @@ public class BattleManager : MonoBehaviour
             endTurn();
             Debug.Log("Player Wins :/");
             battling = false;
+            //GameManager.Instance.savedPlayerData.health = playerScript.health;
+            //SceneManager.LoadScene(0);
+
         }
     }
 

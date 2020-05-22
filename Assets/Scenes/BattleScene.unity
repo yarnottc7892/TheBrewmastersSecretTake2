@@ -185,7 +185,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dd20e133ba75ec488923d56629f0950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  draw: []
+  draw:
+  - {fileID: 11400000, guid: 7a0829594696a324abef1032567ae21a, type: 2}
+  - {fileID: 11400000, guid: 2409a96a529f307428f1a940f5bffcee, type: 2}
+  - {fileID: 11400000, guid: c95304606be7abb4294d9631a27d418f, type: 2}
+  - {fileID: 11400000, guid: 8de54f46d699a0e42b9fe4dbf17d318d, type: 2}
+  - {fileID: 11400000, guid: 3d2bcfd1d541665479da47c4e5ba3ec2, type: 2}
+  - {fileID: 11400000, guid: 3d2bcfd1d541665479da47c4e5ba3ec2, type: 2}
+  - {fileID: 11400000, guid: 35b3e93e41caba24eb70776720dd6f27, type: 2}
+  - {fileID: 11400000, guid: 259a01e440a8e6640a11c1f10ac1bdf3, type: 2}
+  - {fileID: 11400000, guid: 459daa44544a7f24ca3e8bf0d79496d6, type: 2}
+  - {fileID: 11400000, guid: 21817c11b0ec1c540998485cb4b45f5a, type: 2}
   discard: []
 --- !u!4 &36516993
 Transform:
@@ -6623,7 +6633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d1421c780a729d49a511dddeb0c0846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energyPerTurn: 50
+  energyPerTurn: 5
   currentEnergy: 0
   drawDeck: {fileID: 67763321}
   discardDeck: {fileID: 754436290}
@@ -11728,7 +11738,7 @@ MonoBehaviour:
   health: 0
   shield: 0
   poison: 0
-  data: {fileID: 11400000, guid: 401731f5d5e61aa429c9492cdb6c0a06, type: 2}
+  data: {fileID: 11400000, guid: 543407c165c4a5b42be7b3cc72d414d1, type: 2}
   nameText: {fileID: 1962057319}
   decidedAction: 0
 --- !u!50 &1421448937

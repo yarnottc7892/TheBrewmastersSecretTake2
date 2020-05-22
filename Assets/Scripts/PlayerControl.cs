@@ -62,7 +62,6 @@ public class PlayerControl : MonoBehaviour
 
             if (moveHori > 0)
             {
-                Debug.Log("Walk right");
                 anim.SetTrigger("WalkRight");
             }
             else if (moveHori < 0)
