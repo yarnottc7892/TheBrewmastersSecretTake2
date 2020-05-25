@@ -42,11 +42,11 @@ public class GameManager : MonoBehaviour
             Instance = this;
             savedPlayerData = new SaveData();
             Instance.canvas = Instantiate(Instance.canvasPrefab);
-            Instance.craftingUI = Instantiate(Instance.craftingUIPrefab);
-            Instance.textBox = Instantiate(Instance.textBoxUIPrefab);
+            Instance.craftingUI = canvas.transform.GetChild(0).gameObject;
+            Instance.textBox = canvas.transform.GetChild(1).gameObject;
 
-            Instance.craftingUI.transform.SetParent(Instance.canvas.transform);
-            Instance.textBox.transform.SetParent(Instance.canvas.transform);
+            //Instance.craftingUI.transform.SetParent(Instance.canvas.transform);
+            //Instance.textBox.transform.SetParent(Instance.canvas.transform);
             textBox.SetActive(false);
 
             canvas.transform.GetChild(0).gameObject.GetComponent<IngredientManager>().ResetAll();

@@ -34,6 +34,7 @@ public class InventoryManager : MonoBehaviour
             invMaterialDragDrop.Add(temp);
             temp = Instantiate(dragDropPrefab, dragParent);
             temp.GetComponent<InventoryDragDrop>().canvas = canvas;
+            //temp.GetComponent<InventoryDragDrop>().invManagerScale = transform.localScale.x;
             invPotionDragDrop.Add(temp);
 
         }

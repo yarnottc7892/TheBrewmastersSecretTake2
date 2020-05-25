@@ -10,6 +10,8 @@ public class InventoryDragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragH
     private CanvasGroup cG;
     private Vector2 previousPos;
     public InventorySlot craftSlot1, craftSlot2, invSlot, productSlot, currSlot;
+    private Ingredient ingredient;
+    //public float invManagerScale;
     private void Awake()
     {
         rT = GetComponent<RectTransform>();
@@ -22,29 +24,41 @@ public class InventoryDragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragH
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        previousPos = rT.anchoredPosition;
-        Debug.Log("Begin Drag");
-        //cG.alpha = .7f;
-        cG.blocksRaycasts = false;
-        //throw new System.NotImplementedException();
+        if(GetComponent<IngredientDisplay>().ingredient.invAmount != -1)
+        {
+            previousPos = rT.anchoredPosition;
+            Debug.Log("Begin Drag");
+            //cG.alpha = .7f;
+            cG.blocksRaycasts = false;
+            //throw new System.NotImplementedException();
+        }
+
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        Debug.Log("Drag");
-        rT.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        if (GetComponent<IngredientDisplay>().ingredient.invAmount != -1)
+        {
+            Debug.Log("Drag");
+            rT.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        }
+            
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (eventData.pointerCurrentRaycast.gameObject.GetComponent<InventorySlot>() != invSlot && eventData.pointerCurrentRaycast.gameObject.GetComponent<InventorySlot>() != craftSlot1 && eventData.pointerCurrentRaycast.gameObject.GetComponent<InventorySlot>() != craftSlot2)
+        if (GetComponent<IngredientDisplay>().ingredient.invAmount != -1)
         {
-            rT.anchoredPosition = previousPos;
+            if (eventData.pointerCurrentRaycast.gameObject.GetComponent<InventorySlot>() == null || (eventData.pointerCurrentRaycast.gameObject.GetComponent<InventorySlot>() != invSlot && eventData.pointerCurrentRaycast.gameObject.GetComponent<InventorySlot>() != craftSlot1 && eventData.pointerCurrentRaycast.gameObject.GetComponent<InventorySlot>() != craftSlot2))
+            {
+                rT.anchoredPosition = previousPos;
+            }
+            Debug.Log("End Drag");
+            //cG.alpha = 1.0f;
+            cG.blocksRaycasts = true;
+            //throw new System.NotImplementedException();
         }
-        Debug.Log("End Drag");
-        //cG.alpha = 1.0f;
-        cG.blocksRaycasts = true;
-        //throw new System.NotImplementedException();
+
     }
 
     public void OnPointerDown(PointerEventData eventData)
