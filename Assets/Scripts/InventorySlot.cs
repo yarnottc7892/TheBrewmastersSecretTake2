@@ -14,7 +14,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("Pointer INVSLOT Down");
+        //Debug.Log("Pointer INVSLOT Down");
         if(inventoryManager.productSlot = this)
         {
             inventoryManager.CraftPotion();

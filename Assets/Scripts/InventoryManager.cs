@@ -23,7 +23,7 @@ public class InventoryManager : MonoBehaviour
     {
         productSlotDefault = productSlot.GetComponent<Image>().sprite;
         ingredientManager = GetComponent<IngredientManager>();
-        print(ingredientManager);
+        //print(ingredientManager);
         ingredientManager.LoadIngredients();
         Canvas canvas = GetComponentInParent<Canvas>();
         //invDragDrop = new List<InventoryDragDrop>(invSlot.Count);
@@ -76,8 +76,8 @@ public class InventoryManager : MonoBehaviour
         isOnMatTab = true;
         //Debug.Log("LOADMATS");
         int i = 0;
-        print(ingredientManager);
-        Debug.Log("MaterialList Count in inv manager " + ingredientManager.materialList.Count);
+        //print(ingredientManager);
+        //Debug.Log("MaterialList Count in inv manager " + ingredientManager.materialList.Count);
         foreach (KeyValuePair<string, Ingredient> entry in ingredientManager.materialList)
         {
             invMaterialDragDrop[i].SetActive(true);
@@ -87,7 +87,7 @@ public class InventoryManager : MonoBehaviour
             i++;
         }
 
-        print("MATS LOADED: " + i);
+        //print("MATS LOADED: " + i);
 
         for(int j = i; j < invSlot.Count; j++)
         {

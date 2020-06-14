@@ -31,7 +31,7 @@ public class IngredientManager : MonoBehaviour
 
         foreach (KeyValuePair<string, Ingredient> pair in materialList)
         {
-            print("" + pair + pair.Value.invAmount);
+            //print("" + pair + pair.Value.invAmount);
         }
     }
 
