@@ -23,7 +23,7 @@ public class InventoryManager : MonoBehaviour
     {
         productSlotDefault = productSlot.GetComponent<Image>().sprite;
         ingredientManager = GetComponent<IngredientManager>();
-        print(ingredientManager);
+        //print(ingredientManager);
         ingredientManager.LoadIngredients();
         Canvas canvas = GetComponentInParent<Canvas>();
         //invDragDrop = new List<InventoryDragDrop>(invSlot.Count);
