@@ -98,12 +98,16 @@ public class PlayerControl : MonoBehaviour
         {
             craftingMenu.SetActive(!craftingMenu.activeInHierarchy);
             invManager.LoadMaterials();
+            if (!craftingMenu.activeInHierarchy)
+            {
+                invManager.SetCraftIngredientsBackToInvSlot();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Y))
         {
             SavePlayerOnEnemy();
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene("BattleScene");
         }
     }
 

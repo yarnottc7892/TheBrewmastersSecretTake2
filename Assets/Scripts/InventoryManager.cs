@@ -76,8 +76,8 @@ public class InventoryManager : MonoBehaviour
         isOnMatTab = true;
         //Debug.Log("LOADMATS");
         int i = 0;
-        print(ingredientManager);
-        Debug.Log("MaterialList Count in inv manager " + ingredientManager.materialList.Count);
+        //print(ingredientManager);
+        //Debug.Log("MaterialList Count in inv manager " + ingredientManager.materialList.Count);
         foreach (KeyValuePair<string, Ingredient> entry in ingredientManager.materialList)
         {
             invMaterialDragDrop[i].SetActive(true);
@@ -87,7 +87,7 @@ public class InventoryManager : MonoBehaviour
             i++;
         }
 
-        print("MATS LOADED: " + i);
+        //print("MATS LOADED: " + i);
 
         for(int j = i; j < invSlot.Count; j++)
         {
@@ -165,10 +165,10 @@ public class InventoryManager : MonoBehaviour
         if(craftIngredient1 != null && craftIngredient2 != null)
         {
             string craftId = ingredientManager.FindComboID(craftIngredient1.ingredientID, craftIngredient2.ingredientID);
-            print("CraftID: " + craftId);
+            //print("CraftID: " + craftId);
             if(!craftId.Equals(""))
             {
-                print("cancrafttrue");
+                //print("cancrafttrue");
                 canCraft = true;
                 craftIndex = 0;
 
@@ -181,7 +181,7 @@ public class InventoryManager : MonoBehaviour
 
                     craftIndex++;
                 }
-                print("changeproductslot");
+                //print("changeproductslot");
                 invPotionDragDrop[craftIndex].SetActive(true);
                 productSlot.GetComponent<Image>().sprite = invPotionDragDrop[craftIndex].GetComponent<IngredientDisplay>().ingredient.sprite;
                 if (isOnMatTab)
@@ -190,11 +190,71 @@ public class InventoryManager : MonoBehaviour
                 }
                 
             }
-            print("cancraftfalse");
+            //print("cancraftfalse");
         }
         else
         {
             canCraft = false;
+        }
+    }
+
+    public void SetCraftIngredientBackToInvSlot(Ingredient ingredient)
+    {
+        bool found = false;
+        int i = 0;
+        foreach (GameObject entry in invMaterialDragDrop)
+        {
+            var currInvDD = entry.GetComponent<InventoryDragDrop>();
+            var currInvDis = entry.GetComponent<IngredientDisplay>();
+
+            if (currInvDis.ingredient.ingredientID == ingredient.ingredientID)
+            {
+                currInvDD.rT.anchoredPosition = currInvDD.invSlot.rT.anchoredPosition;
+                CraftUnslotted(currInvDD);
+                currInvDD.currSlot = currInvDD.invSlot;
+                found = true;
+                print("BACKMAT1 " + i);
+                break;
+            }
+            i++;
+        }
+        LoadPotions();
+        LoadMaterials();
+        
+        if (!found)
+        {
+            i = 0;
+            foreach (GameObject entry in invPotionDragDrop)
+            {
+                var currInvDD = entry.GetComponent<InventoryDragDrop>();
+                var currInvDis = entry.GetComponent<IngredientDisplay>();
+
+                if (currInvDis.ingredient.ingredientID == ingredient.ingredientID)
+                {
+                    currInvDD.rT.anchoredPosition = currInvDD.invSlot.rT.anchoredPosition;
+                    CraftUnslotted(currInvDD);
+                    currInvDD.currSlot = currInvDD.invSlot;
+                    found = true;
+                    print("BACKMAT1 " + i);
+                    break;
+                }
+                i++;
+            }
+            LoadMaterials();
+            LoadPotions();
+        }
+        
+    }
+
+    public void SetCraftIngredientsBackToInvSlot()
+    {
+        if (craftIngredient1)
+        {
+            SetCraftIngredientBackToInvSlot(craftIngredient1);
+        }
+        if (craftIngredient2)
+        {
+            SetCraftIngredientBackToInvSlot(craftIngredient2);
         }
     }
 
@@ -207,10 +267,23 @@ public class InventoryManager : MonoBehaviour
                 invPotionDragDrop[craftIndex].GetComponent<InventoryDragDrop>().SetAlpha(1.0f);
             }
             ingredientManager.CombineIngredients(craftIngredient1.ingredientID, craftIngredient2.ingredientID);
+
             //create product drag drop
             LoadMaterials();
             LoadPotions();
-            
+
+            //put mats back if at 0
+            if (craftIngredient1.invAmount == 0)
+            {
+                SetCraftIngredientBackToInvSlot(craftIngredient1);
+            }
+            if (craftIngredient2.invAmount == 0)
+            {
+                SetCraftIngredientBackToInvSlot(craftIngredient2);
+            }
+
+            LoadPotions();
+
             print("potion index " + craftIndex);
             //invPotionDragDrop[craftIndex].SetActive(true);
             //invPotionDragDrop[craftIndex].GetComponent<InventoryDragDrop>().rT.anchoredPosition = productSlot.rT.anchoredPosition;
@@ -220,6 +293,7 @@ public class InventoryManager : MonoBehaviour
 
             craftIndex = -1;
             CraftSlotted(null, null, null);
+            /*
             if(craftIngredient1.invAmount < 1)
             {
                 craftDD1.SetAlpha(.7f);
@@ -228,6 +302,7 @@ public class InventoryManager : MonoBehaviour
             {
                 craftDD1.SetAlpha(.7f);
             }
+            */
         }
     }
 

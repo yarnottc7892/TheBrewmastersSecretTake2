@@ -14,8 +14,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("Pointer INVSLOT Down");
-        if(inventoryManager.productSlot = this)
+        //Debug.Log("Pointer INVSLOT Down");
+        if (inventoryManager.productSlot = this)
         {
             inventoryManager.CraftPotion();
         }
@@ -23,20 +23,25 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerDownHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        if(eventData.pointerDrag != null && eventData.pointerDrag.GetComponent<InventoryDragDrop>().invSlot == this)
+        if (eventData.pointerDrag != null && eventData.pointerDrag.GetComponent<InventoryDragDrop>().invSlot == this)
         {
             eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = rT.anchoredPosition;
-            if(eventData.pointerDrag.GetComponent<InventoryDragDrop>().currSlot == eventData.pointerDrag.GetComponent<InventoryDragDrop>().craftSlot1 || eventData.pointerDrag.GetComponent<InventoryDragDrop>().currSlot == eventData.pointerDrag.GetComponent<InventoryDragDrop>().craftSlot2)
+            if (eventData.pointerDrag.GetComponent<InventoryDragDrop>().currSlot == eventData.pointerDrag.GetComponent<InventoryDragDrop>().craftSlot1 || eventData.pointerDrag.GetComponent<InventoryDragDrop>().currSlot == eventData.pointerDrag.GetComponent<InventoryDragDrop>().craftSlot2)
             {
                 inventoryManager.CraftUnslotted(eventData.pointerDrag.GetComponent<InventoryDragDrop>());
             }
             eventData.pointerDrag.GetComponent<InventoryDragDrop>().currSlot = this;
         }
-        else if(eventData.pointerDrag != null && (eventData.pointerDrag.GetComponent<InventoryDragDrop>().craftSlot1 == this || eventData.pointerDrag.GetComponent<InventoryDragDrop>().craftSlot2 == this))
+        else if (eventData.pointerDrag != null && (eventData.pointerDrag.GetComponent<InventoryDragDrop>().craftSlot1 == this || eventData.pointerDrag.GetComponent<InventoryDragDrop>().craftSlot2 == this))
         {
             eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = rT.anchoredPosition;
             eventData.pointerDrag.GetComponent<InventoryDragDrop>().currSlot = this;
             inventoryManager.CraftSlotted(eventData.pointerDrag.GetComponent<IngredientDisplay>().ingredient, this, eventData.pointerDrag.GetComponent<InventoryDragDrop>());
         }
+    }
+
+    public void SetBackToInvSlot(IngredientDisplay ingDis)
+    {
+        inventoryManager.SetCraftIngredientBackToInvSlot(ingDis.ingredient);
     }
 }

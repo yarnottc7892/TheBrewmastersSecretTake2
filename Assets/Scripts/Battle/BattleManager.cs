@@ -48,7 +48,7 @@ public class BattleManager : MonoBehaviour
     {
         if (state == BattleState.Start)
         {
-            // deck.draw = GameManager.Instance.deck;
+            deck.draw = GameManager.Instance.deck;
             battling = true;
             deck.shuffleDraw();
             state = BattleState.PlayerTurn;

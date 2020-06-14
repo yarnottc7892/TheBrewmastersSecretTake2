@@ -28,11 +28,6 @@ public class IngredientManager : MonoBehaviour
 
     private void Update()
     {
-
-        foreach (KeyValuePair<string, Ingredient> pair in materialList)
-        {
-            print("" + pair + pair.Value.invAmount);
-        }
     }
 
     public void LoadIngredients()
@@ -121,7 +116,7 @@ public class IngredientManager : MonoBehaviour
 
     public string FindComboID(string ingredientID1, string ingredientID2)
     {
-        Debug.Log("COMBINE " + ingredientID1 + " AND " + ingredientID2 + materialList.ContainsKey(ingredientID1) + materialList.ContainsKey(ingredientID2));
+        //Debug.Log("COMBINE " + ingredientID1 + " AND " + ingredientID2 + materialList.ContainsKey(ingredientID1) + materialList.ContainsKey(ingredientID2));
         if (((materialList.ContainsKey(ingredientID1) && materialList.ContainsKey(ingredientID2)) && ((materialList[ingredientID1].invAmount > 0) && (materialList[ingredientID2].invAmount > 0))) ||
             ((materialList.ContainsKey(ingredientID1) && potionList.ContainsKey(ingredientID2)) && ((materialList[ingredientID1].invAmount > 0) && (potionList[ingredientID2].invAmount > 0))) ||
             ((potionList.ContainsKey(ingredientID1) && materialList.ContainsKey(ingredientID2)) && ((potionList[ingredientID1].invAmount > 0) && (materialList[ingredientID2].invAmount > 0))) ||
@@ -143,7 +138,7 @@ public class IngredientManager : MonoBehaviour
             }
 
         }
-        print("" + materialList.ContainsKey(ingredientID1) + materialList.ContainsKey(ingredientID2) + (materialList[ingredientID1].invAmount > 0) + materialList[ingredientID1].invAmount + (materialList[ingredientID2].invAmount > 0) + materialList[ingredientID2].invAmount);
+        //print("" + materialList.ContainsKey(ingredientID1) + materialList.ContainsKey(ingredientID2) + (materialList[ingredientID1].invAmount > 0) + materialList[ingredientID1].invAmount + (materialList[ingredientID2].invAmount > 0) + materialList[ingredientID2].invAmount);
         return "";
     }
 }
