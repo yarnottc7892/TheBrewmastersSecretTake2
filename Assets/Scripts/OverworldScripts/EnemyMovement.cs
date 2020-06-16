@@ -44,6 +44,9 @@ public class EnemyMovement : MonoBehaviour
     //Reference to the child object transform with the vision cone.
     private Transform visionObject;
 
+    //Reference to the player
+    private GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -86,7 +89,40 @@ public class EnemyMovement : MonoBehaviour
                 }
                 break;
             case WalkState.PURSUE:
+                pursuePlayer();
                 break;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Player"))
+        {
+            //May not be necessary. Might be better to assign on Start.
+            player = col.gameObject;
+
+            enemyState = WalkState.PURSUE;
+            
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        
+        if (col.gameObject.CompareTag("Player"))
+        {
+            restCounter = 0;
+            restTimer = TIMER;
+            movementTimer = TIMER;
+
+            int decide = Random.Range(0,3);
+
+            enemyState = decide == 3 ? WalkState.REST : WalkState.PATROL;
+
+            //May not be necessary. Might be better to assign on Start.
+            player = null;
+
+            changeDirection();
         }
     }
 
@@ -104,5 +140,15 @@ public class EnemyMovement : MonoBehaviour
             enemyState = WalkState.REST;
         }
 
+    }
+
+    private void pursuePlayer()
+    {
+        Vector3 direction = (player.transform.position - transform.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x);
+        visionObject.localPosition = new Vector3(.1f * Mathf.Cos(angle), .1f * Mathf.Sin(angle), 0);
+        visionObject.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
+
+        rb.velocity = direction * speed * 4;
     }
 }
