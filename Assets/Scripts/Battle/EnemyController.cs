@@ -9,6 +9,7 @@ public class EnemyController : Combatant_Base, IDropHandler
 {
     public Enemy_Base data;
     [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI intention;
 
     public int decidedAction;
 
@@ -55,6 +56,7 @@ public class EnemyController : Combatant_Base, IDropHandler
     {
         decidedAction = Random.Range(0, 1000) % data.actions.Count;
         Debug.Log("Decided Action:" + decidedAction);
+        intention.text = data.actions[decidedAction].generateDescription();
     }
 
     public IEnumerator takeTurn() 
@@ -69,7 +71,8 @@ public class EnemyController : Combatant_Base, IDropHandler
             if (data.actions[decidedAction].targetPlayer)
             {
                 target = battle.enemy;
-            } else
+            } 
+            else
             {
                 target = battle.player;
             }

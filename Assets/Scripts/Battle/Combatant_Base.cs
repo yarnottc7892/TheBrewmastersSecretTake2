@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using DG.Tweening;
 
 public class Combatant_Base : MonoBehaviour
@@ -10,6 +11,8 @@ public class Combatant_Base : MonoBehaviour
 
     [SerializeField] private ParticleSystem heal;
 
+    [SerializeField] private TextMeshProUGUI damageIndicator;
+
     public int health;
     protected int maxHealth;
     [SerializeField] private int shield = 0;
@@ -17,7 +20,7 @@ public class Combatant_Base : MonoBehaviour
 
     // Events to change the canvas
     public Action<int> OnSetup;
-    public Action<int, int> OnHealthChange;
+    public Action<int, int, int> OnHealthChange;
     public Action<int> OnApplyPoison;
     public Action<int> OnTakePoison;
     public Action<int> OnChangeShield;
@@ -37,7 +40,7 @@ public class Combatant_Base : MonoBehaviour
         if (shield < 0)
         {
             health += shield;
-            OnHealthChange?.Invoke(health, maxHealth);
+            OnHealthChange?.Invoke(damage * -1, health, maxHealth);
             shield = 0;
         }
 
@@ -61,7 +64,7 @@ public class Combatant_Base : MonoBehaviour
         {
             health = maxHealth;
         }
-        OnHealthChange?.Invoke(health, maxHealth);
+        OnHealthChange?.Invoke(amount, health, maxHealth);
     }
 
     public void applyPoison(int amount) 
@@ -79,8 +82,9 @@ public class Combatant_Base : MonoBehaviour
             {
                 health = 0;
             }
+
+            OnHealthChange?.Invoke(poison * -1, health, maxHealth);
             poison--;
-            OnHealthChange.Invoke(health, maxHealth);
             OnTakePoison?.Invoke(poison);
         }
     }

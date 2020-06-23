@@ -41,12 +41,8 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-        
-        canvasGroup = GetComponent<CanvasGroup>();
-    }
 
-    private void Awake() {
-        
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     public void setData(Card_Base newData) 
@@ -68,9 +64,7 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
             playCardIfCan(playSelfTargetedCard);
         }
 
-
-        battle.currentCard = null;
-        
+        battle.currentCard = null; 
     }
 
     // Card is clicked on
@@ -100,7 +94,8 @@ public class CardController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
         }
     }
 
-    public void discard() {
+    public void discard() 
+    {
 
         targeting = false;
 

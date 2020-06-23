@@ -48,7 +48,8 @@ public class BattleManager : MonoBehaviour
     {
         if (state == BattleState.Start)
         {
-            deck.draw = GameManager.Instance.deck;
+            /** Uncomment this when it needs to get data from inventory **/
+            // deck.draw = GameManager.Instance.deck;
             battling = true;
             deck.shuffleDraw();
             state = BattleState.PlayerTurn;
@@ -149,7 +150,6 @@ public class BattleManager : MonoBehaviour
             float newYPos = handStartingHeight;
             float newRotation = 0f;
 
-
             if (cardsInHand.Count % 2 == 0)
             {
 
@@ -164,20 +164,11 @@ public class BattleManager : MonoBehaviour
             Vector2 newPos = new Vector2(newXPos, newYPos);
             Vector3 newRot = new Vector3(0f, 0f, newRotation);
 
-            cardRect.DOAnchorPos(newPos, 0.5f).OnComplete(setCardPositions);
+            cardRect.DOAnchorPos(newPos, 0.5f);         
             cardRect.DORotate(newRot, 0.5f);
+            cardsInHand[i].startPos = newPos;
             cardsInHand[i].startRot = newRot;
-
         }
-    }
-
-    private void setCardPositions() 
-    {
-        foreach(CardController card in cardsInHand)
-        {
-            card.startPos = card.GetComponent<RectTransform>().anchoredPosition;
-        }
-        
     }
 
     public void removeCard(CardController card) 

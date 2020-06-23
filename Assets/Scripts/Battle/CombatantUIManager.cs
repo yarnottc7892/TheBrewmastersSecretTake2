@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class CombatantUIManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class CombatantUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI shieldText;
     [SerializeField] private Transform poison;
     [SerializeField] private TextMeshProUGUI poisonText;
+    [SerializeField] private TextMeshProUGUI damageIndicator;
 
     // Start is called before the first frame update
     void Start()
@@ -33,11 +35,15 @@ public class CombatantUIManager : MonoBehaviour
         healthText.text = healthFraction;
     }
 
-    private void ChangeHealth(int health, int maxHealth) 
+    private void ChangeHealth(int change, int health, int maxHealth) 
     {
         healthbar.value = health;
         string healthFraction = health + "/" + maxHealth;
         healthText.text = healthFraction;
+
+        damageIndicator.text = change.ToString();
+        damageIndicator.rectTransform.localScale = Vector3.one;
+        damageIndicator.rectTransform.DOScale(Vector3.zero, 1f);
     }
 
     private void ApplyPoison(int amount) 
