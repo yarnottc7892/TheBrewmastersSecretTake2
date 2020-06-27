@@ -104,21 +104,33 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Y))
+        /*if (Input.GetKeyDown(KeyCode.Y))
         {
             SavePlayerOnEnemy();
             SceneManager.LoadScene("BattleScene");
+        }*/
+    }
+
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            SavePlayerOnEnemy(other.gameObject.GetComponent<EnemyMovement>().enemyType, other.transform.position);
+            Destroy(other.gameObject);
         }
     }
 
     //Used to save data on an enemy encounter
-    private void SavePlayerOnEnemy()
+    private void SavePlayerOnEnemy(Enemy_Base enemy, Vector2 enemyPos)
     {
         localPlayerData.playerPosition = transform.position;
-        //localPlayerData.enemy = enemy;
+        localPlayerData.enemy = enemy;
         localPlayerData.health = health;
+        localPlayerData.enemyPos = enemyPos;
 
         GameManager.Instance.savedPlayerData = localPlayerData;
+
+        SceneManager.LoadScene("BattleScene");
     }
 
     private void LoadPlayer()
@@ -137,6 +149,11 @@ public class PlayerControl : MonoBehaviour
         craftingMenu.SetActive(true);
         invManager.LoadMaterials();
         craftingMenu.SetActive(false);
+
+        if (localPlayerData.dropItem)
+        {
+            Instantiate(localPlayerData.enemy.item, new Vector3(localPlayerData.enemyPos.x, localPlayerData.enemyPos.y, 0f), Quaternion.identity);
+        }
 
     }
 

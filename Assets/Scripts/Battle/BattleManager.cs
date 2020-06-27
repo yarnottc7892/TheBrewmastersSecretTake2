@@ -49,7 +49,7 @@ public class BattleManager : MonoBehaviour
         if (state == BattleState.Start)
         {
             /** Uncomment this when it needs to get data from inventory **/
-            // deck.draw = GameManager.Instance.deck;
+            deck.draw = GameManager.Instance.deck;
             battling = true;
             deck.shuffleDraw();
             state = BattleState.PlayerTurn;
@@ -69,8 +69,9 @@ public class BattleManager : MonoBehaviour
             endTurn();
             Debug.Log("Player Loses :/");
             battling = false;
+            GameManager.Instance.savedPlayerData.dropItem = false;
             //GameManager.Instance.savedPlayerData.health = playerScript.health;
-            //SceneManager.LoadScene(0);
+            SceneManager.LoadScene(0);
         }
         else if(enemyScript.health <= 0 && battling)
         {
@@ -79,8 +80,9 @@ public class BattleManager : MonoBehaviour
             endTurn();
             Debug.Log("Player Wins :/");
             battling = false;
+            GameManager.Instance.savedPlayerData.dropItem = true;
             //GameManager.Instance.savedPlayerData.health = playerScript.health;
-            //SceneManager.LoadScene(0);
+            SceneManager.LoadScene(0);
 
         }
     }

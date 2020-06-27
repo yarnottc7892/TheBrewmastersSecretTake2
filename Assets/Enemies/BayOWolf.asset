@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: BayOWolf
   m_EditorClassIdentifier: 
   name: Bay O' Wolf
-  maxHealth: 50
+  maxHealth: 1
   art: {fileID: 21300000, guid: 69404b08bb116ed4c88c49cbd494f037, type: 3}
   actions:
   - {fileID: 11400000, guid: 9af4161b3bb8c7641953d6d794600308, type: 2}
   - {fileID: 11400000, guid: d4e38fca934bd6749a418afb40335dcf, type: 2}
   - {fileID: 11400000, guid: 8f305e7c032bff94e9e1eab643a296d1, type: 2}
   - {fileID: 11400000, guid: 8811a93309b2b3b4482f14b843060ccd, type: 2}
+  item: {fileID: 7725376855251529723, guid: 85e4caca0d1c93647828f4b0b276811a, type: 3}

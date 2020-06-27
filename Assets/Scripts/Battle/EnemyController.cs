@@ -13,8 +13,9 @@ public class EnemyController : Combatant_Base, IDropHandler
 
     public int decidedAction;
 
-    private void Start() {
-
+    private void Start()
+    {
+        data = GameManager.Instance.savedPlayerData.enemy;
         maxHealth = data.maxHealth;
         health = maxHealth;
         nameText.text = data.name;
@@ -23,7 +24,6 @@ public class EnemyController : Combatant_Base, IDropHandler
     }
     public void OnDrop(PointerEventData eventData) 
     {
-
         CardController card = eventData.pointerDrag.GetComponent<CardController>();
         card.data.Play(transform, transform);
         card.discard();

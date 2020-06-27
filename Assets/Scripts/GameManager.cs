@@ -8,6 +8,8 @@ public class SaveData
     public Vector2 playerPosition = Vector2.zero;
     public int health = 30;
     public Enemy_Base enemy = null;
+    public bool dropItem = false;
+    public Vector2 enemyPos = Vector2.zero;
 }
 
 public class GameManager : MonoBehaviour
@@ -21,10 +23,6 @@ public class GameManager : MonoBehaviour
     public GameObject canvas;
 
     public SaveData savedPlayerData;
-
-    public GameObject craftingUIPrefab;
-
-    public GameObject textBoxUIPrefab;
 
     public GameObject textBox;
 
@@ -45,15 +43,11 @@ public class GameManager : MonoBehaviour
             Instance.craftingUI = canvas.transform.GetChild(0).gameObject;
             Instance.textBox = canvas.transform.GetChild(1).gameObject;
 
-            //Instance.craftingUI.transform.SetParent(Instance.canvas.transform);
-            //Instance.textBox.transform.SetParent(Instance.canvas.transform);
             textBox.SetActive(false);
 
             canvas.transform.GetChild(0).gameObject.GetComponent<IngredientManager>().ResetAll();
 
             DontDestroyOnLoad(canvas);
-            //DontDestroyOnLoad(craftingUI);
-            //DontDestroyOnLoad(textBox);
         }
         else if (Instance != this)
         {

@@ -9,4 +9,5 @@ public class Enemy_Base : ScriptableObject
     public int maxHealth;
     public Sprite art;
     public List<Effect_Base> actions = new List<Effect_Base>();
+    public GameObject item;
 }

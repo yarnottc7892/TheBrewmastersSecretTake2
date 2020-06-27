@@ -47,6 +47,9 @@ public class EnemyMovement : MonoBehaviour
     //Reference to the player
     private GameObject player;
 
+    //Enemy_Base scriptable object
+    public Enemy_Base enemyType;
+
     // Start is called before the first frame update
     void Start()
     {
