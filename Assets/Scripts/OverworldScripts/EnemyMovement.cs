@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
@@ -65,35 +66,40 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch(enemyState)
+        if (!GameManager.overworldPaused)
         {
-            case WalkState.PATROL: 
-                if (movementTimer > 0)
-                {
-                    rb.velocity = walkDirection * speed;
-                    movementTimer -= Time.deltaTime;
-                }
-                else
-                {
-                    movementTimer = TIMER;
-                    changeDirection();
-                }
-                break;
-            case WalkState.REST:
-                if (restTimer > 0)
-                {
-                    restTimer -= Time.deltaTime;
-                }
-                else
-                {
-                    restTimer = TIMER;
-                    restCounter = 0;
-                    enemyState = WalkState.PATROL;
-                }
-                break;
-            case WalkState.PURSUE:
-                pursuePlayer();
-                break;
+            switch (enemyState)
+            {
+                case WalkState.PATROL:
+                    if (movementTimer > 0)
+                    {
+                        rb.velocity = walkDirection * speed;
+                        movementTimer -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        movementTimer = TIMER;
+                        changeDirection();
+                    }
+
+                    break;
+                case WalkState.REST:
+                    if (restTimer > 0)
+                    {
+                        restTimer -= Time.deltaTime;
+                    }
+                    else
+                    {
+                        restTimer = TIMER;
+                        restCounter = 0;
+                        enemyState = WalkState.PATROL;
+                    }
+
+                    break;
+                case WalkState.PURSUE:
+                    pursuePlayer();
+                    break;
+            }
         }
     }
 

@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class SaveData
 {
-    public Vector2 playerPosition = Vector2.zero;
     public int health = 30;
     public Enemy_Base enemy = null;
     public bool dropItem = false;
@@ -15,6 +15,8 @@ public class SaveData
 public class GameManager : MonoBehaviour
 {
     public static bool textBoxOn = false;
+
+    public static bool overworldPaused = false;
 
     public static GameManager Instance { get; private set; }
 
@@ -52,6 +54,19 @@ public class GameManager : MonoBehaviour
         else if (Instance != this)
         {
             Destroy(gameObject);
+        }
+
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    private void OnSceneUnloaded(Scene current)
+    {
+        if (current.name == "BattleScene")
+        {
+            if (Instance.savedPlayerData.dropItem)
+            {
+                Instantiate(Instance.savedPlayerData.enemy.item, new Vector3(Instance.savedPlayerData.enemyPos.x, Instance.savedPlayerData.enemyPos.y, 0f), Quaternion.identity);
+            }
         }
     }
 

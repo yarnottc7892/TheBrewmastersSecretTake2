@@ -33,8 +33,15 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        LoadPlayer();
-        //craftingMenu.SetActive(true);
+
+        GameObject temp = GameManager.Instance.canvas.transform.GetChild(0).gameObject;
+        craftingMenu = temp.transform.GetChild(0).gameObject;
+        invManager = temp.GetComponent<InventoryManager>();
+        ingManager = temp.GetComponent<IngredientManager>();
+
+        craftingMenu.SetActive(true);
+        invManager.LoadMaterials();
+        craftingMenu.SetActive(false);
 
         anim = GetComponent<Animator>();
         
@@ -55,7 +62,7 @@ public class PlayerControl : MonoBehaviour
             firstRun = false;
         }
 
-        if (!craftingMenu.activeInHierarchy)
+        if (!craftingMenu.activeInHierarchy && !GameManager.overworldPaused)
         {
             float moveHori = Input.GetAxis("Horizontal");
             float moveVert = Input.GetAxis("Vertical");
@@ -94,7 +101,7 @@ public class PlayerControl : MonoBehaviour
             rb.velocity = Vector2.zero;
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && !GameManager.overworldPaused)
         {
             craftingMenu.SetActive(!craftingMenu.activeInHierarchy);
             invManager.LoadMaterials();
@@ -123,38 +130,14 @@ public class PlayerControl : MonoBehaviour
     //Used to save data on an enemy encounter
     private void SavePlayerOnEnemy(Enemy_Base enemy, Vector2 enemyPos)
     {
-        localPlayerData.playerPosition = transform.position;
         localPlayerData.enemy = enemy;
         localPlayerData.health = health;
         localPlayerData.enemyPos = enemyPos;
 
         GameManager.Instance.savedPlayerData = localPlayerData;
+        GameManager.overworldPaused = true;
 
-        SceneManager.LoadScene("BattleScene");
-    }
-
-    private void LoadPlayer()
-    {
-        localPlayerData = GameManager.Instance.savedPlayerData;
-
-
-        transform.position = localPlayerData.playerPosition;
-        health = localPlayerData.health;
-
-        GameObject temp = GameManager.Instance.canvas.transform.GetChild(0).gameObject;
-        craftingMenu = temp.transform.GetChild(0).gameObject;
-        invManager = temp.GetComponent<InventoryManager>();
-        ingManager = temp.GetComponent<IngredientManager>();
-
-        craftingMenu.SetActive(true);
-        invManager.LoadMaterials();
-        craftingMenu.SetActive(false);
-
-        if (localPlayerData.dropItem)
-        {
-            Instantiate(localPlayerData.enemy.item, new Vector3(localPlayerData.enemyPos.x, localPlayerData.enemyPos.y, 0f), Quaternion.identity);
-        }
-
+        SceneManager.LoadScene("BattleScene", LoadSceneMode.Additive);
     }
 
 }

@@ -78,11 +78,12 @@ public class BattleManager : MonoBehaviour
             playerScript.enabled = false;
             enemyScript.enabled = false;
             endTurn();
-            Debug.Log("Player Wins :/");
+            //Debug.Log("Player Wins :/");
             battling = false;
             GameManager.Instance.savedPlayerData.dropItem = true;
             //GameManager.Instance.savedPlayerData.health = playerScript.health;
-            SceneManager.LoadScene(0);
+            GameManager.overworldPaused = false;
+            SceneManager.UnloadSceneAsync("BattleScene");
 
         }
     }
